@@ -10,17 +10,17 @@ Un jeu d'action survivor-like en 2D pixel art où le joueur affronte des hordes 
 
 ### 1.2 Informations générales
 - **Genre** : Action / Survivor-like / Roguelite
-- **Sous-genre** : Bullet heaven, Horde survival
+- **Sous-genre** : Horde survival
 - **Plateforme cible** : PC (Steam)
 - **Public visé** : Joueurs casual à hardcore
 - **Durée de partie estimée** : 15-30 minutes par run
-- **Nombre de joueurs** : Solo (possibilité de co-op en extension)
+- **Nombre de joueurs** : Solo
 
 ### 1.3 Piliers du jeu
-1. **Accessibilité** : Facile à prendre en main, difficile à maîtriser
+1. **Accessibilité** : Facile à prendre en main, maîtrise possible via connaissance du jeu
 2. **Progression satisfaisante** : Montée en puissance gratifiante en partie + méta-progression
 3. **Build diversity** : Nombreuses combinaisons de capacités et d'armes
-4. **Rejouabilité** : Chaque run est différent, incitation à "une dernière partie"
+4. **Rejouabilité** : Chaque run est différente, incitation à "une dernière partie"
 
 ### 1.4 Références principales
 - **Vampire Survivors** : Gameplay automatique, progression de niveau, builds
