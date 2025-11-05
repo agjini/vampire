@@ -11,7 +11,7 @@ Un jeu d'action survivor-like en 2D pixel art où le joueur affronte des hordes 
 ### 1.2 Informations générales
 - **Genre** : Action / Survivor-like / Roguelite
 - **Sous-genre** : Bullet heaven, Horde survival
-- **Plateforme cible** : PC (Steam) / Mobile (Portrait et Paysage)
+- **Plateforme cible** : PC (Steam)
 - **Public visé** : Joueurs casual à hardcore
 - **Durée de partie estimée** : 15-30 minutes par run
 - **Nombre de joueurs** : Solo (possibilité de co-op en extension)
