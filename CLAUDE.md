@@ -4,9 +4,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Eclipse of Magic** - A magic-based survivor-like game where the world's magic has vanished.
+**Sorceleuse: Eclipse of Magic** - A magic-based survivor-like game where the world's magic has vanished.
 
-- **Title**: Eclipse of Magic
+- **Title**: Sorceleuse
+- **Subtitle**: Eclipse of Magic
 - **Genre**: Action / Survivor-like / Roguelite with magic system and resource management
 - **Core Mechanic**: Manual spellcasting with mana gauge management
 - **Setting**: Dark cave, Sorceress trapped in hostile environment, recovering lost magic
@@ -238,7 +239,7 @@ All game balance in `config.ron` for rapid iteration:
 
 ## Key Differentiators vs Vampire Survivors
 
-| Aspect | Vampire Survivors | Eclipse of Magic |
+| Aspect | Vampire Survivors | Sorceleuse |
 |--------|-------------------|------------------|
 | Combat | Auto-attack | Manual spellcasting |
 | Resource | None | Mana gauge management |

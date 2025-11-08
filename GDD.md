@@ -1,6 +1,7 @@
 # Game Design Document
 
-**Titre** : Eclipse of Magic
+**Titre** : Sorceleuse
+**Sous-titre** : Eclipse of Magic
 **Projet** : Survivor-like skill-based avec système de magie
 **Équipe** : Indie collaborative (temps libre)
 **Cible** : PC (Steam) → Mobile premium
@@ -359,7 +360,7 @@ struct LightSource {
 
 ## Différenciateurs vs Vampire Survivors
 
-| Aspect | Vampire Survivors | Eclipse of Magic |
+| Aspect | Vampire Survivors | Sorceleuse |
 |--------|-------------------|------------------|
 | **Système de combat** | Attaques auto | Magie manuelle avec jauge |
 | **Ressource** | Aucune | Gestion mana (resource management) |
