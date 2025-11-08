@@ -62,10 +62,11 @@ Spend Magic Fragments → Permanent upgrades → RETRY
 - Stats: 100 HP, 140 speed, 100 max mana, 20 mana regen/s
 
 ### Combat System
-- **Manual spellcasting**: Aim with mouse, click to cast (consumes mana)
+- **Manual spellcasting with orbital cursor**: Mouse moves cursor on circle around Sorceress (150px radius)
+- **Orbital cursor (cross)**: Cursor stays on circle = radius of light (150px), spells aim toward cursor
 - **Mana gauge**: 100 max, regenerates 20/s (5s for full recharge)
 - **2 spell slots max** + **4 passive slots max**
-- No auto-aim, skill-based targeting
+- **Unique mechanic**: Orbital aiming (no other survivor-like does this)
 
 ### Spells (MVP)
 1. **Gleam (Lueur)**: Starter spell
@@ -194,20 +195,28 @@ struct LightSource {
     radius: f32,
     intensity: f32,
 }
+
+// Orbital cursor (unique mechanic)
+struct OrbitalCursor {
+    angle: f32,        // Current angle on circle
+    radius: f32,       // 150px (same as light radius)
+    target_angle: f32, // Angle toward mouse position
+}
 ```
 
 ### System Execution Order
 1. input_system
-2. **mana_regen_system** (unique to this game)
-3. movement_system
-4. spell_system (mana cost check)
-5. projectile_system
-6. collision_system
-7. boss_ai_system
-8. spawn_system
-9. level_up_system
-10. **lighting_system** (fog of war)
-11. ui_system
+2. **orbital_cursor_system** (update cursor position on circle toward mouse)
+3. **mana_regen_system** (unique to this game)
+4. movement_system
+5. spell_system (mana cost check, aim toward cursor)
+6. projectile_system
+7. collision_system
+8. boss_ai_system
+9. spawn_system
+10. level_up_system
+11. **lighting_system** (fog of war)
+12. ui_system (draw cursor, HP, mana, XP)
 
 ### Configuration File (config.ron)
 
@@ -241,7 +250,8 @@ All game balance in `config.ron` for rapid iteration:
 
 | Aspect | Vampire Survivors | Sorceleuse |
 |--------|-------------------|------------------|
-| Combat | Auto-attack | Manual spellcasting |
+| Combat | Auto-attack | Manual spellcasting w/ orbital cursor |
+| Aiming | Auto-aim | Orbital cursor (unique mechanic) |
 | Resource | None | Mana gauge management |
 | Duration | 30 min | 15 min (intense) |
 | Build | Unlimited weapons | 2 spells + 4 passives |
@@ -267,6 +277,7 @@ All game balance in `config.ron` for rapid iteration:
 🚩 Debating >30min without deciding and moving forward
 
 ### Critical Success Factors
+- **Orbital cursor must feel smooth and intuitive** → Unique mechanic, must nail it
 - **Mana management must feel tactical, not frustrating** → Core differentiator
 - **Boss at level 5 must be rewarding** → Validates boss rhythm
 - **Fog of war must enhance, not annoy** → Atmosphere vs frustration balance
@@ -277,12 +288,14 @@ All game balance in `config.ron` for rapid iteration:
 **Keep it simple - placeholders first, polish later**
 
 - Sorceress sprite: 32x32 girl (static, no animation)
+- **Orbital cursor**: White cross (16x16 or simple +) that follows circle
 - Entity sprites: 32x32 dark silhouettes (Ombre, Spectre, Demon)
 - Boss sprite: 64x64 large shadow with red glowing eyes
 - Spell projectiles: Colored circles (blue for Gleam, red/orange for Fireball)
 - UI: Colored rectangles (red HP, glowing blue mana, purple XP)
 - Map: Solid dark background
-- Light: Semi-transparent white circle shader
+- Light: Semi-transparent white circle shader (150px radius)
+- **Cursor circle guide**: Thin white circle outline (150px) showing orbital path (optional, can help players)
 - VFX: Simple white/blue particles
 
 **Music/SFX:**

@@ -167,10 +167,16 @@ Dépenser fragments de magie → Améliorer stats permanentes → RETRY
 
 ### Contrôles
 - **WASD** : Déplacement 8 directions
-- **Souris** : Viser direction du sort
-- **Clic gauche** : Lancer sort slot 1 (si mana suffisante)
-- **Clic droit** : Lancer sort slot 2 (si équipé ET mana suffisante)
+- **Souris** : Déplace curseur orbital (croix) sur cercle autour de la Sorceleuse (rayon 150px = rayon lumière)
+- **Clic gauche** : Lancer sort slot 1 vers le curseur (si mana suffisante)
+- **Clic droit** : Lancer sort slot 2 vers le curseur (si équipé ET mana suffisante)
 - **Espace** : Dash/esquive (cooldown 5s) - *Optionnel MVP*
+
+**Mécanique unique : Curseur orbital**
+- Le curseur (croix blanche) reste toujours sur un cercle de 150px autour de la Sorceleuse
+- Bouger la souris déplace le curseur sur ce cercle
+- Les sorts sont lancés vers la position du curseur
+- **Avantages** : Focus constant sur Sorceleuse, mobile-friendly, unique, cohérent avec rayon de lumière
 
 ### Système de mana
 - **Jauge max** : 100 points
@@ -362,7 +368,8 @@ struct LightSource {
 
 | Aspect | Vampire Survivors | Sorceleuse |
 |--------|-------------------|------------------|
-| **Système de combat** | Attaques auto | Magie manuelle avec jauge |
+| **Système de combat** | Attaques auto | Magie manuelle avec curseur orbital |
+| **Visée** | Auto-aim | Curseur sur cercle autour du joueur (unique) |
 | **Ressource** | Aucune | Gestion mana (resource management) |
 | **Durée** | 30 min | 15 min (intense) |
 | **Build** | Illimité (6+ armes) | 2 sorts + 4 passifs (choix tactiques) |

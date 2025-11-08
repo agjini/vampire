@@ -34,6 +34,7 @@
 | Asset | Taille | Description | Placeholder acceptable | Priorité |
 |-------|--------|-------------|------------------------|----------|
 | **Sorceleuse** | 32x32 | Fille, robe simple, vue de dessus | Rectangle violet + point blanc (tête) | ⭐⭐⭐ |
+| **Curseur orbital** | 16x16 | Croix blanche sur cercle autour Sorceleuse | Symbole + blanc simple | ⭐⭐⭐ |
 | **Ombre rampante** | 32x32 | Silhouette sombre, floue | Rectangle noir semi-transparent | ⭐⭐⭐ |
 | **Spectre** | 32x32 | Fantôme gris, traversant obstacles | Rectangle gris transparent (50%) | ⭐⭐⭐ |
 | **Démon mineur** | 32x32 | Créature rouge/orange, agressive | Rectangle rouge + 2 points jaunes (yeux) | ⭐⭐⭐ |
@@ -53,6 +54,7 @@
 | **Barre de vie** | Rectangle rouge, fond noir | Rect rouge basique | ⭐⭐⭐ |
 | **Barre de mana** | Rectangle bleu lumineux, pulse | Rect bleu basique (pulse = Level 2) | ⭐⭐⭐ |
 | **Barre XP** | Rectangle violet, bas d'écran | Rect violet basique | ⭐⭐⭐ |
+| **Cercle guide curseur** | Cercle 150px rayon | Ligne blanche fine montrant chemin orbital | Optionnel (aide joueurs) | ⭐ |
 | **Carte amélioration** | 200x300px, fond sombre | Rectangle gris + texte blanc | ⭐⭐ |
 | **Icône sort** | 32x32 pour UI | Cercle coloré (bleu/rouge) | ⭐⭐ |
 
@@ -153,7 +155,7 @@ Ces règles sont **NON-NÉGOCIABLES** pour éviter de s'égarer :
 
 ### Développement
 - **Bevy** : https://bevyengine.org/
-- **VSCode** : Avec extension `rust-analyzer`
+- **Zed** : Avec extension `rust-analyzer`
 - **Git** : Pour versioning (obligatoire)
 
 ### Assets 2D
