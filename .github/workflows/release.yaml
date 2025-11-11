@@ -118,7 +118,7 @@ jobs:
         id: ghd
         uses: proudust/gh-describe@v2
     outputs:
-      version: ${{ steps.ghd.outputs.describe }}"
+      version: ${{ steps.ghd.outputs.describe }}
 
   # Build and package a release for each platform.
   build:
