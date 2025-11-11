@@ -4,10 +4,6 @@ on:
   # Trigger this workflow on a manual workflow dispatch.
   workflow_dispatch:
     inputs:
-      version:
-        description: "Version number in the format `v1.2.3`"
-        required: true
-        type: string
       build_for_windows:
         description: "Build for Windows (WARNING: slow!)"
         default: true
@@ -40,6 +36,9 @@ on:
         description: "Deny warnings"
         default: false
         type: boolean
+  push:
+    branches:
+      - main
 
 # Cancel the release workflow when a more recent workflow begins.
 concurrency:
@@ -91,6 +90,15 @@ env:
   # See: <https://github.com/orgs/community/discussions/27059>.
   use_github_cache: false
 
+  build_for_windows: ${{ inputs.build_for_windows || false }}
+  build_for_macos: ${{ inputs.build_for_macos || false }}
+  build_for_linux: ${{ inputs.build_for_linux || true }}
+  build_for_web: ${{ inputs.build_for_web || true }}
+  upload_to_github: ${{ inputs.upload_to_github || true }}
+  deploy_to_itch: ${{ inputs.deploy_to_itch || true }}
+  deploy_to_github_pages: ${{ inputs.deploy_to_github_pages || false }}
+  deny_warnings: ${{ inputs.deny_warnings || false }}
+
 jobs:
   # Forward some environment variables as outputs of this job.
   # This is needed because the `env` context can't be used in the `if:` condition of a job:
@@ -103,16 +111,14 @@ jobs:
     outputs:
       itch_page: ${{ env.itch_page }}
 
-  # Determine the version number for this workflow.
   get-version:
     runs-on: ubuntu-latest
     steps:
-      - name: Determine version number
-        id: tag
-        run: echo "ref=${GITHUB_REF#refs/*/}" >> "${GITHUB_OUTPUT}"
+      - name: Git describe
+        id: ghd
+        uses: proudust/gh-describe@v2
     outputs:
-      # Use the input from workflow dispatch, or fall back to the git ref.
-      version: ${{ inputs.version || steps.ref.outputs.ref }}
+      version: ${{ steps.ghd.outputs.describe }}"
 
   # Build and package a release for each platform.
   build:
@@ -172,7 +178,7 @@ jobs:
           if [ '${{ matrix.platform }}' != 'windows' ]; then
             RUSTFLAGS="${RUSTFLAGS:+$RUSTFLAGS }"'-Zshare-generics=y'
           fi
-          if [ '${{ inputs.deny_warnings }}' = 'true' ]; then
+          if [ '${{ env.deny_warnings }}' = 'true' ]; then
             RUSTFLAGS="${RUSTFLAGS:+$RUSTFLAGS }"'-Dwarnings'
           fi
           echo "RUSTFLAGS=${RUSTFLAGS}" >> "${GITHUB_ENV}"
@@ -185,10 +191,10 @@ jobs:
 
           # Check if building for this platform is enabled.
           echo 'is_platform_enabled=${{
-            (matrix.platform == 'web' && inputs.build_for_web) ||
-            (matrix.platform == 'linux' && inputs.build_for_linux) ||
-            (matrix.platform == 'windows' && inputs.build_for_windows) ||
-            (matrix.platform == 'macos' && inputs.build_for_macos)
+            (matrix.platform == 'web' && env.build_for_web) ||
+            (matrix.platform == 'linux' && env.build_for_linux) ||
+            (matrix.platform == 'windows' && env.build_for_windows) ||
+            (matrix.platform == 'macos' && env.build_for_macos)
           }}' >> "${GITHUB_ENV}"
 
       - name: Checkout repository
@@ -311,13 +317,13 @@ jobs:
           retention-days: 1
 
       - name: Upload web bundle to workflow artifacts for GitHub Pages (Web)
-        if: ${{ env.is_platform_enabled == 'true' && matrix.platform == 'web' && inputs.deploy_to_github_pages }}
+        if: ${{ env.is_platform_enabled == 'true' && matrix.platform == 'web' && env.deploy_to_github_pages }}
         uses: actions/upload-pages-artifact@v3
         with:
           path: ${{ env.app }}/${{ env.cargo_build_binary_name }}
 
       - name: Upload package to GitHub release
-        if: ${{ env.is_platform_enabled == 'true' && inputs.upload_to_github }}
+        if: ${{ env.is_platform_enabled == 'true' && env.upload_to_github }}
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
@@ -334,7 +340,7 @@ jobs:
       - forward-env
       - get-version
       - build
-    if: ${{ inputs.deploy_to_itch && needs.forward-env.outputs.itch_page != '' }}
+    if: ${{ env.deploy_to_itch && needs.forward-env.outputs.itch_page != '' }}
 
     steps:
       - name: Download packages
@@ -375,7 +381,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
-    if: ${{ inputs.deploy_to_github_pages && inputs.build_for_web }}
+    if: ${{ env.deploy_to_github_pages && env.build_for_web }}
 
     steps:
       - name: Deploy to GitHub Pages
