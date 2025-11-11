@@ -28,10 +28,6 @@ on:
         description: "Deploy to itch.io (if configured)"
         default: true
         type: boolean
-      deploy_to_github_pages:
-        description: "Deploy web build to GitHub Pages"
-        default: false
-        type: boolean
       deny_warnings:
         description: "Deny warnings"
         default: false
@@ -96,7 +92,6 @@ env:
   build_for_web: ${{ inputs.build_for_web || true }}
   upload_to_github: ${{ inputs.upload_to_github || true }}
   deploy_to_itch: ${{ inputs.deploy_to_itch || true }}
-  deploy_to_github_pages: ${{ inputs.deploy_to_github_pages || false }}
   deny_warnings: ${{ inputs.deny_warnings || false }}
 
 jobs:
@@ -368,23 +363,3 @@ jobs:
               tmp/"${package}"/* \
               '${{ env.itch_page }}':"${package#package-}"
           done
-
-  # Deploy to GitHub Pages.
-  deploy-to-github-pages:
-    runs-on: ubuntu-latest
-    needs: build
-    permissions:
-      # Required to deploy to GitHub Pages.
-      pages: write
-      # Required for GitHub Pages to verify the source of the deployment.
-      # See: <https://github.com/actions/deploy-pages/issues/329>.
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
-    if: ${{ env.deploy_to_github_pages && env.build_for_web }}
-
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deploy
-        uses: actions/deploy-pages@v4
