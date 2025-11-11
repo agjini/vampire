@@ -110,6 +110,7 @@ jobs:
         run: "true"
     outputs:
       itch_page: ${{ env.itch_page }}
+      deploy_to_itch: ${{ env.deploy_to_itch }}
 
   get-version:
     runs-on: ubuntu-latest
@@ -340,7 +341,7 @@ jobs:
       - forward-env
       - get-version
       - build
-    if: ${{ env.deploy_to_itch && needs.forward-env.outputs.itch_page != '' }}
+    if: ${{ needs.forward-env.outputs.deploy_to_itch == 'true' && needs.forward-env.outputs.itch_page != '' }}
 
     steps:
       - name: Download packages
