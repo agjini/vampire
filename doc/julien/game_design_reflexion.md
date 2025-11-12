@@ -21,8 +21,6 @@ Créer un jeu survivor-like complet et partageable sur Steam, fonctionnant sur P
 
 **Inspirations principales :**
 - **Vampire Survivors** (+++) - Référence principale
-- **Balatro** - Système de progression
-- **Doodle Jump** - Simplicité et addictivité
 - **Spelunky** - Génération procédurale
 
 ### Proposition de valeur unique
@@ -393,4 +391,3 @@ Analyse des mécaniques et de la direction artistique des principaux concurrents
 - Bibliothèques de musiques Dark Fantasy
 - Bibliothèques de musiques Chiptunes
 - *(Liens spécifiques à ajouter)*
-
