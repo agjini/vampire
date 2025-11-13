@@ -1,5 +1,6 @@
 //! Player-specific behavior.
 
+use avian2d::prelude::{Collider, CollisionEventsEnabled, DebugRender, LinearVelocity, LockedAxes, RigidBody};
 use bevy::{
     image::{ImageLoaderSettings, ImageSampler},
     prelude::*,
@@ -48,19 +49,25 @@ pub fn player(
                 index: player_animation.get_atlas_index(),
             },
         ),
-        Transform::from_scale(Vec2::splat(8.0).extend(1.0)),
+        Transform::from_scale(Vec2::splat(4.0).extend(1.0)),
         MovementController {
             max_speed,
             ..default()
         },
         ScreenWrap,
         player_animation,
+        RigidBody::Dynamic,
+        Collider::rectangle(28.0, 28.0),
+        LinearVelocity::ZERO,
+        LockedAxes::ROTATION_LOCKED,
+        CollisionEventsEnabled,
+        DebugRender::default().with_collider_color(Color::WHITE),
     )
 }
 
 #[derive(Component, Debug, Clone, Copy, Eq, PartialEq, Default, Reflect)]
 #[reflect(Component)]
-struct Player;
+pub struct Player;
 const UP: [KeyCode; 2] = [KeyCode::KeyW, KeyCode::ArrowUp];
 const DOWN: [KeyCode; 2] = [KeyCode::KeyS, KeyCode::ArrowDown];
 const LEFT: [KeyCode; 2] = [KeyCode::KeyA, KeyCode::ArrowLeft];
