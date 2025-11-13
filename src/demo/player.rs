@@ -58,9 +58,13 @@ pub fn player(
     )
 }
 
-#[derive(Component, Debug, Clone, Copy, PartialEq, Eq, Default, Reflect)]
+#[derive(Component, Debug, Clone, Copy, Eq, PartialEq, Default, Reflect)]
 #[reflect(Component)]
 struct Player;
+const UP: [KeyCode; 2] = [KeyCode::KeyW, KeyCode::ArrowUp];
+const DOWN: [KeyCode; 2] = [KeyCode::KeyS, KeyCode::ArrowDown];
+const LEFT: [KeyCode; 2] = [KeyCode::KeyA, KeyCode::ArrowLeft];
+const RIGHT: [KeyCode; 2] = [KeyCode::KeyD, KeyCode::ArrowRight];
 
 fn record_player_directional_input(
     input: Res<ButtonInput<KeyCode>>,
@@ -68,16 +72,16 @@ fn record_player_directional_input(
 ) {
     // Collect directional input.
     let mut intent = Vec2::ZERO;
-    if input.pressed(KeyCode::KeyW) || input.pressed(KeyCode::ArrowUp) {
+    if input.any_pressed(UP) {
         intent.y += 1.0;
     }
-    if input.pressed(KeyCode::KeyS) || input.pressed(KeyCode::ArrowDown) {
+    if input.any_pressed(DOWN) {
         intent.y -= 1.0;
     }
-    if input.pressed(KeyCode::KeyA) || input.pressed(KeyCode::ArrowLeft) {
+    if input.any_pressed(LEFT) {
         intent.x -= 1.0;
     }
-    if input.pressed(KeyCode::KeyD) || input.pressed(KeyCode::ArrowRight) {
+    if input.any_pressed(RIGHT) {
         intent.x += 1.0;
     }
 
