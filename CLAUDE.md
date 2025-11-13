@@ -348,3 +348,4 @@ If darkness annoying → Increase light radius
 
 Remember: **Fun > Beautiful** for MVP. A ugly but fun game beats a beautiful but boring one.
 - Je voudrais qu'en tant qu'assistant de l'équipe tu gardes tout le temps à l'esprit de nous aider à terminer ce jeu et éviter de perdre du temps et de s'égarer et de ne jamais pouvoir finir le jeu. Je pense important de faire simple et minimaliste. Si possible de definir un maximum de contraintes
+- tout cela c'est bien mais je n'aime pas les commentaires inutiles dans le code. Moins il y a de code mieux c'est

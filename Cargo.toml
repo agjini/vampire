@@ -5,7 +5,10 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-bevy = { version = "0.17" }
+avian2d = { version = "0.4.1" }
+bevy = { version = "0.17.2" }
+bevy-inspector-egui = { version = "0.35.0", optional = true }
+bevy_egui = { version = "0.38.0", optional = true }
 rand = "0.9"
 # Compile out low-severity logs to improve performance.
 # Remove these features if you want to profile your game with tracy.
@@ -28,6 +31,8 @@ dev = [
     "bevy/bevy_ui_debug",
     # Improve error messages coming from Bevy
     "bevy/track_location",
+    "bevy-inspector-egui",
+    "bevy_egui",
 ]
 dev_native = [
     "dev",

@@ -12,6 +12,8 @@ mod menus;
 mod screens;
 mod theme;
 
+use avian2d::PhysicsPlugins;
+use avian2d::prelude::Gravity;
 use bevy::{asset::AssetMetaCheck, prelude::*};
 
 fn main() -> AppExit {
@@ -48,12 +50,13 @@ impl Plugin for AppPlugin {
             asset_tracking::plugin,
             audio::plugin,
             demo::plugin,
+            PhysicsPlugins::default(),
             #[cfg(feature = "dev")]
             dev_tools::plugin,
             menus::plugin,
             screens::plugin,
             theme::plugin,
-        ));
+        )).insert_resource(Gravity::ZERO);
 
         // Order new `AppSystems` variants by adding them here:
         app.configure_sets(
@@ -88,7 +91,7 @@ enum AppSystems {
     Update,
 }
 
-/// Whether or not the game is paused.
+/// Whether the game is paused.
 #[derive(States, Copy, Clone, Eq, PartialEq, Hash, Debug, Default)]
 struct Pause(pub bool);
 
