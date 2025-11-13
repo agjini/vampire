@@ -8,7 +8,7 @@ Check out the [documentation](https://github.com/TheBevyFlock/bevy_new_2d/blob/m
 Voir [Questions/Decisions](doc/decisions.md)
 
 # TODO
-
+- [ ] Bevy Rapier2d n'est pas compatible avec bevy 0.17, attendre la mise à jour ou rétrograder bevy en 0.16 https://bevy.org/news/bevy-0-17/ https://github.com/dimforge/bevy_rapier
 - [x] RPG Maker trouver des assets (maxime)
 - [ ] Tout le monde : chercher des assets qui nous plaisent
 - [x] Tout le monde : proposer : univers/nom en correspondance avec des assets qui nous plaisent
