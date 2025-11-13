@@ -35,6 +35,12 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "src/**"
+      - "assets/**"
+      - "Cargo.lock"
+      - "Cargo.toml"
+      - "clippy.toml"
 
 # Cancel the release workflow when a more recent workflow begins.
 concurrency:
