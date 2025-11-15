@@ -13,12 +13,8 @@ mod screens;
 mod theme;
 
 use avian2d::PhysicsPlugins;
-use avian2d::prelude::{Gravity, PhysicsDebugPlugin};
+use avian2d::prelude::Gravity;
 use bevy::{asset::AssetMetaCheck, prelude::*};
-#[cfg(feature = "dev")]
-use bevy_egui::EguiPlugin;
-#[cfg(feature = "dev")]
-use bevy_inspector_egui::quick::WorldInspectorPlugin;
 
 fn main() -> AppExit {
     App::new().add_plugins(AppPlugin).run()
@@ -57,12 +53,6 @@ impl Plugin for AppPlugin {
             PhysicsPlugins::default(),
             #[cfg(feature = "dev")]
             dev_tools::plugin,
-            #[cfg(feature = "dev")]
-            EguiPlugin::default(),
-            #[cfg(feature = "dev")]
-            WorldInspectorPlugin::new(),
-            #[cfg(feature = "dev")]
-            PhysicsDebugPlugin,
             menus::plugin,
             screens::plugin,
             theme::plugin,
