@@ -9,7 +9,6 @@ use crate::{
     screens::Screen,
 };
 
-
 pub(super) fn plugin(app: &mut App) {
     app.load_resource::<LevelAssets>();
 }

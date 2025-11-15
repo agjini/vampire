@@ -15,7 +15,9 @@ mod theme;
 use avian2d::PhysicsPlugins;
 use avian2d::prelude::{Gravity, PhysicsDebugPlugin};
 use bevy::{asset::AssetMetaCheck, prelude::*};
+#[cfg(feature = "dev")]
 use bevy_egui::EguiPlugin;
+#[cfg(feature = "dev")]
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 
 fn main() -> AppExit {
@@ -60,11 +62,11 @@ impl Plugin for AppPlugin {
             #[cfg(feature = "dev")]
             WorldInspectorPlugin::new(),
             #[cfg(feature = "dev")]
-            PhysicsDebugPlugin::default(),
+            PhysicsDebugPlugin,
             menus::plugin,
             screens::plugin,
             theme::plugin,
-        )).insert_resource(Gravity(Vec2::ZERO));
+        )).insert_resource(Gravity::ZERO);
 
         // Order new `AppSystems` variants by adding them here:
         app.configure_sets(
