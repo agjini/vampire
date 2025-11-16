@@ -1,18 +1,20 @@
 //! Player-specific behavior.
 
-use avian2d::prelude::{Collider, CollisionEventsEnabled, DebugRender, LinearVelocity, LockedAxes, RigidBody};
+use avian2d::prelude::{
+    Collider, CollisionEventsEnabled, DebugRender, LinearVelocity, LockedAxes, RigidBody,
+};
 use bevy::{
     image::{ImageLoaderSettings, ImageSampler},
     prelude::*,
 };
 
 use crate::{
-    AppSystems, PausableSystems,
-    asset_tracking::LoadResource,
-    demo::{
+    asset_tracking::LoadResource, demo::{
         animation::PlayerAnimation,
         movement::{MovementController, ScreenWrap},
     },
+    AppSystems,
+    PausableSystems,
 };
 
 pub(super) fn plugin(app: &mut App) {

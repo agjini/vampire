@@ -52,9 +52,7 @@ impl Default for MovementController {
     }
 }
 
-fn apply_movement(
-    mut movement_query: Query<(&MovementController, &mut LinearVelocity)>,
-) {
+fn apply_movement(mut movement_query: Query<(&MovementController, &mut LinearVelocity)>) {
     for (controller, mut linear_velocity) in &mut movement_query {
         let velocity = controller.max_speed * controller.intent;
         linear_velocity.0 = velocity;

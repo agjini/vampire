@@ -2,9 +2,7 @@
 
 use avian2d::prelude::{PhysicsDebugPlugin, PhysicsGizmos};
 use bevy::{
-    dev_tools::states::log_transitions,
-    input::common_conditions::input_just_pressed,
-    prelude::*,
+    dev_tools::states::log_transitions, input::common_conditions::input_just_pressed, prelude::*,
 };
 use bevy_egui::EguiPlugin;
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
@@ -42,7 +40,14 @@ const TOGGLE_KEY: KeyCode = KeyCode::F2;
 
 fn toggle_debug(mut debug_state: ResMut<DebugState>) {
     debug_state.enabled = !debug_state.enabled;
-    info!("Debug tools {}", if debug_state.enabled { "enabled" } else { "disabled" });
+    info!(
+        "Debug tools {}",
+        if debug_state.enabled {
+            "enabled"
+        } else {
+            "disabled"
+        }
+    );
 }
 
 fn apply_debug_state(

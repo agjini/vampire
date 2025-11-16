@@ -4,13 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Sorceleuse: Eclipse of Magic** - A magic-based survivor-like game where the world's magic has vanished.
+**Colonie terminus** - A space survival survivor-like game where you crash on a hostile planet.
 
-- **Title**: Sorceleuse
-- **Subtitle**: Eclipse of Magic
-- **Genre**: Action / Survivor-like / Roguelite with magic system and resource management
-- **Core Mechanic**: Manual spellcasting with mana gauge management
-- **Setting**: Dark cave, Sorceress trapped in hostile environment, recovering lost magic
+- **Title**: Colonie terminus
+- **Genre**: Action / Survivor-like / Roguelite with magic/tech system and resource management
+- **Core Mechanic**: Manual shooting with energy gauge management
+- **Setting**: Hostile alien planet, crashed survivor waiting for exfiltration
 - **Target Platform**: PC (Steam), with future mobile premium support
 - **Tech Stack**: Bevy (Rust) - ECS architecture
 - **Current Status**: Pre-production - concise GDD completed, ready to start MVP development
@@ -28,131 +27,131 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Game Design Pillars
 
-1. **Mana Management** - Manual spellcasting with mana gauge creates tactical resource management
-2. **Tactical Choices** - 2 spells + 4 passives max, every level-up is critical
-3. **Addictive Loop** - 15 min runs, permadeath, boss every 5 levels with lore reveals
-4. **Power Growth** - From barely surviving in darkness to dominating with magic
-5. **Skill Ceiling** - Spell timing, mana management, positioning over spam
+1. **Energy Management** - Manual shooting with energy gauge creates tactical resource management
+2. **Tactical Choices** - 2 weapons + 4 passives max, every level-up is critical
+3. **Addictive Loop** - Flexible run duration (5-30 min), random events (boss, crashed ships)
+4. **Power Growth** - From barely surviving with basic gear to dominating with tech/magic
+5. **Skill Ceiling** - Weapon timing, energy management, positioning over spam
 
 ## Core Gameplay Loop
 
 ```
-Spawn in dark cave → Cast spells (mouse aim) → Manage mana gauge → Kill entities → Collect XP crystals
+Crash on planet → Choose exfiltration time → Shoot weapons (mouse aim) → Manage energy gauge → Kill creatures → Collect XP
     ↓
 Level up (30-60s) → Choose 1 upgrade from 3 cards
     ↓
-Upgrade spell OR new passive OR new spell (if <2)
+Upgrade weapon OR new passive OR new weapon (if <2)
     ↓
-Every 5 levels → BOSS with unique pattern + lore
+Random events → Boss pop OR Crashed ship (loot)
     ↓
-Boss victory → Magic Fragment + Guaranteed spell drop
+Become more powerful → Dominate the planet
     ↓
-Become more powerful → Sorceress glows brighter
+Die (lose run loot) OR Exfiltration success (keep rewards)
     ↓
-Die OR Level 15 (victory) OR Level 100 (unlock character 2)
-    ↓
-Spend Magic Fragments → Permanent upgrades → RETRY
+Meta-progression → Permanent upgrades → RETRY
 ```
 
 ## Key Systems (MVP - Level 1)
 
 ### Character
-- **Sorceress** (girl): First playable character
-- Becomes more luminous as she recovers magic (visual progression)
-- Stats: 100 HP, 140 speed, 100 max mana, 20 mana regen/s
+- **Crashed Survivor**: First playable character
+- Stats: 100 HP, 140 speed, 100 max energy, 20 energy regen/s
 
 ### Combat System
-- **Manual spellcasting with orbital cursor**: Mouse moves cursor on circle around Sorceress (150px radius)
-- **Orbital cursor (cross)**: Cursor stays on circle = radius of light (150px), spells aim toward cursor
-- **Mana gauge**: 100 max, regenerates 20/s (5s for full recharge)
-- **2 spell slots max** + **4 passive slots max**
+- **Manual shooting with orbital cursor**: Mouse moves cursor on circle around player (150px radius)
+- **Orbital cursor (cross)**: Cursor stays on circle, weapons aim toward cursor
+- **Energy gauge**: 100 max, regenerates 20/s (5s for full recharge)
+- **2 weapon slots max** + **4 passive slots max**
 - **Unique mechanic**: Orbital aiming (no other survivor-like does this)
 
-### Spells (MVP)
-1. **Gleam (Lueur)**: Starter spell
-   - Cost: 10 mana, Damage: 15, Fast projectile
-   - Light projectile that illuminates area
+### Weapons (MVP)
+1. **Blaster**: Starter weapon
+   - Cost: 10 energy, Damage: 15, Fast projectile
+   - Blue laser, reliable and spammable
 
-2. **Fireball (Boule de feu)**: Unlockable level 3
-   - Cost: 30 mana, Damage: 50 AoE
+2. **Plasma Launcher**: Unlockable level 3
+   - Cost: 30 energy, Damage: 50 AoE
    - Explosive projectile, high risk/reward
 
-### Entities (MVP)
-- **Shadow Crawler (Ombre)**: Slow, weak HP, flees from light
-- **Specter**: Medium speed, passes through walls
-- **Lesser Demon (Démon mineur)**: Fast, aggressive, dangerous
+### Creatures (MVP)
+- **Crawler (Grouilleur)**: Slow, weak HP, group spawns
+- **Flyer (Voltigeur)**: Medium speed, erratic movement
+- **Predator (Prédateur)**: Fast, aggressive, dangerous
 
 ### Boss (MVP)
-- **Guardian of Darkness** (Gardien des Ténèbres) - Level 5
+- **Planetary Guardian** (Gardien planétaire) - Random event
   - 500 HP, 2-phase combat
   - Phase 1: Slow charge + projectiles
   - Phase 2 (<50% HP): Faster, 3-projectile fan attacks
-  - Drops: Magic Fragment + Random spell + Lore text
+  - Drops: Rare loot
+  - 20% spawn chance every 3 levels
 
-### Ambiance
-- **Dark cave environment**: Black/dark gray background
-- **Fog of war**: Entities emerge from darkness
-- **Light source**: Circle around Sorceress (150px radius)
-- **Visual feedback**: Mana bar glows/pulses
+### Map
+- **Spherical planet**: Wraps infinitely, no obstacles
+- **No fog of war**: Simplified for MVP
+- **Spherical minimap**: Player position + crashed ship marker
+- **Visual feedback**: Energy bar glows/pulses
 
 ### Difficulty Scaling
 - Levels 1-3: Tutorial phase
-- Levels 3-5: Intensification, Fireball available
-- Level 5: BOSS
-- Levels 6-15: Exponential scaling (+15% HP per 30s)
-- Level 15: VICTORY (~15 min)
+- Levels 3-5: Intensification, Plasma Launcher available
+- Levels 6+: Exponential scaling (+15% HP per 30s)
+- Random events: Boss or crashed ship
+- Exfiltration: Player-chosen time (5-30 min)
 
 ## Development Phases
 
 ### Level 1: MVP (2-3 months) - CURRENT FOCUS
-**Goal**: Validate that magic system + boss is FUN in 10 minutes
+**Goal**: Validate that energy system + events is FUN in 10 minutes
 
 **Must-have features:**
-- Sorceress character with WASD movement
-- Mana gauge system (100 max, 20 regen/s)
-- 2 spells: Gleam + Fireball
-- 3 entity types + 1 boss (level 5)
+- Player character with WASD movement
+- Energy gauge system (100 max, 20 regen/s)
+- 2 weapons: Blaster + Plasma Launcher
+- 3 creature types + random boss event + crashed ship event
 - XP system with level-ups every 30-60s
-- 6 upgrade types (new spell, +damage, +mana regen, +speed, +HP, +collect radius)
-- Magic Fragment currency (kept on death)
-- Dark cave ambiance with fog of war
-- Basic UI: HP bar, Mana bar (glowing blue), XP bar, timer, fragments counter
+- 6 upgrade types (new weapon, +damage, +energy regen, +speed, +HP, +collect radius)
+- Spherical planet map (infinite wrapping, no obstacles)
+- Spherical minimap (player position + crashed ship)
+- Exfiltration timer (player choice: 5-30 min)
+- Basic UI: HP bar, Energy bar (glowing cyan), XP bar, timer, minimap
 
 **Forbidden scope creep:**
-- Multiple bosses (1 only)
-- Multiple biomes (cave only)
+- Multiple biomes (single planet only)
 - Spendable meta-progression (Level 2)
-- Complex elements/synergies (Level 3)
-- Multiple characters (Sorceress only)
+- Complex synergies (Level 3)
+- Multiple characters (1 only)
 - Complex animations (static sprites OK)
+- Fog of war (not needed)
+- Obstacles on planet (keep flat)
 
 **Success metrics:**
-- 60 FPS with 100+ entities
+- 60 FPS with 100+ creatures
 - <50ms input lag
-- Mana management feels tactical, not frustrating
-- Boss at level 5 feels rewarding
-- 3/3 external testers want to replay after boss
+- Energy management feels tactical, not frustrating
+- Random events feel exciting and rewarding
+- Spherical map wrapping works smoothly
+- 3/3 external testers want to replay
 
-### Level 2: Meta-Progression & Bosses (1-2 mois)
-- Meta-progression menu to spend Magic Fragments
-- 2nd and 3rd bosses (levels 10, 15)
-- 5 total spells, 12 passives
-- Lore reveals after each boss
-- Destructible obstacles
+### Level 2: Meta-Progression & Events (1-2 months)
+- Meta-progression menu to spend collected resources
+- More event types and variations
+- 5 total weapons, 12 passives
 - Basic animations + particle effects
+- Improved visual feedback
 
-### Level 3: Depth & Content (2-3 mois)
-- Elemental system (Fire/Ice/Lightning) with synergies
-- Spell evolutions (e.g., Gleam → Laser Beam)
-- 2nd unlockable character (level 100)
-- 10 spells, 25 passives
-- Additional biome
+### Level 3: Depth & Content (2-3 months)
+- Tech/Magic synergy system
+- Weapon evolutions
+- 2nd unlockable character
+- 10 weapons, 25 passives
+- Additional planet biome
 - 30+ achievements
 
-### Level 4: Steam Release (1-2 mois)
+### Level 4: Steam Release (1-2 months)
 - Final polish
 - Complete music & sound design
-- 5 biomes, 6 bosses with complete lore story
+- 3-4 planet biomes with varied events
 - Infinite mode
 - Tutorial
 - Leaderboards
@@ -163,26 +162,23 @@ Spend Magic Fragments → Permanent upgrades → RETRY
 ### ECS Components Structure
 
 ```rust
-// Core player component
-struct Sorceress {
+struct Player {
     hp: f32,
     max_hp: f32,
     speed: f32,
-    mana: f32,
-    max_mana: f32,
-    mana_regen: f32,
+    energy: f32,
+    max_energy: f32,
+    energy_regen: f32,
 }
 
-// Mana system is critical differentiator
-struct Spell {
+struct Weapon {
     damage: f32,
-    mana_cost: f32,
+    energy_cost: f32,
     cast_cooldown: f32,
     is_aoe: bool,
     aoe_radius: Option<f32>,
 }
 
-// Boss with phases
 struct Boss {
     hp: f32,
     max_hp: f32,
@@ -190,33 +186,32 @@ struct Boss {
     attack_timer: f32,
 }
 
-// Fog of war lighting
-struct LightSource {
+struct SphericalWorld {
     radius: f32,
-    intensity: f32,
+    circumference: f32,
 }
 
-// Orbital cursor (unique mechanic)
 struct OrbitalCursor {
-    angle: f32,        // Current angle on circle
-    radius: f32,       // 150px (same as light radius)
-    target_angle: f32, // Angle toward mouse position
+    angle: f32,
+    radius: f32,
+    target_angle: f32,
 }
 ```
 
 ### System Execution Order
 1. input_system
 2. **orbital_cursor_system** (update cursor position on circle toward mouse)
-3. **mana_regen_system** (unique to this game)
+3. **energy_regen_system** (critical differentiator)
 4. movement_system
-5. spell_system (mana cost check, aim toward cursor)
-6. projectile_system
-7. collision_system
-8. boss_ai_system
-9. spawn_system
-10. level_up_system
-11. **lighting_system** (fog of war)
-12. ui_system (draw cursor, HP, mana, XP)
+5. **spherical_world_wrapping_system** (unique to this game)
+6. weapon_system (energy cost check, aim toward cursor)
+7. projectile_system
+8. collision_system
+9. boss_ai_system
+10. spawn_system
+11. **event_system** (boss, crashed ships)
+12. level_up_system
+13. ui_system (draw cursor, HP, energy, XP, minimap)
 
 ### Configuration File (config.ron)
 
@@ -224,41 +219,53 @@ All game balance in `config.ron` for rapid iteration:
 
 ```ron
 (
-    sorceress: (
+    player: (
         hp: 100.0,
-        max_mana: 100.0,
-        mana_regen: 20.0,
+        max_energy: 100.0,
+        energy_regen: 20.0,
         speed: 140.0,
-        light_radius: 150.0,
+        collect_radius: 70.0,
     ),
-    spells: {
-        "lueur": (damage: 15.0, mana_cost: 10.0, ...),
-        "boule_de_feu": (damage: 50.0, mana_cost: 30.0, is_aoe: true, ...),
+    weapons: {
+        "blaster": (damage: 15.0, energy_cost: 10.0, ...),
+        "lance_plasma": (damage: 50.0, energy_cost: 30.0, is_aoe: true, ...),
     },
-    entities: {
-        "ombre": (hp: 25.0, speed: 40.0, ...),
-        "spectre": (hp: 45.0, can_pass_walls: true, ...),
-        "demon": (hp: 60.0, speed: 110.0, ...),
+    creatures: {
+        "grouilleur": (hp: 25.0, speed: 40.0, ...),
+        "voltigeur": (hp: 45.0, speed: 90.0, ...),
+        "predateur": (hp: 60.0, speed: 110.0, ...),
     },
-    boss: {
-        "gardien_tenebres": (hp: 500.0, phase2_hp_threshold: 250.0, ...),
-    },
+    boss: (
+        hp: 500.0,
+        phase2_hp_threshold: 250.0,
+        spawn_chance: 0.2,
+        spawn_every_n_levels: 3,
+    ),
+    crashed_ship_event: (
+        spawn_chance: 0.15,
+        spawn_every_n_levels: 2,
+        enemy_count: 18,
+        loot_count: 3,
+    ),
+    spherical_world: (
+        radius: 2000.0,
+    ),
 )
 ```
 
 ## Key Differentiators vs Vampire Survivors
 
-| Aspect | Vampire Survivors | Sorceleuse |
+| Aspect | Vampire Survivors | Colonie terminus |
 |--------|-------------------|------------------|
-| Combat | Auto-attack | Manual spellcasting w/ orbital cursor |
+| Combat | Auto-attack | Manual shooting w/ orbital cursor |
 | Aiming | Auto-aim | Orbital cursor (unique mechanic) |
-| Resource | None | Mana gauge management |
-| Duration | 30 min | 15 min (intense) |
-| Build | Unlimited weapons | 2 spells + 4 passives |
-| Bosses | None (DLC only) | Every 5 levels + lore |
-| Narration | Minimal | Story revealed via bosses |
-| Ambiance | Colorful cartoon | Dark Fantasy cave, fog of war |
-| Progression | Cosmetic neutral | Sorceress glows brighter |
+| Resource | None | Energy gauge management |
+| Duration | 30 min fixed | Player choice (5-30 min) |
+| Build | Unlimited weapons | 2 weapons + 4 passives |
+| Events | None | Random boss + crashed ships |
+| Map | Fixed rectangle | Spherical planet (infinite wrap) |
+| Narration | Minimal | Space survival situation |
+| Ambiance | Colorful cartoon | Sparse sci-fi, hostile planet |
 | Feel | Chill, zen | Tense, tactical |
 
 ## Development Philosophy
@@ -278,74 +285,76 @@ All game balance in `config.ron` for rapid iteration:
 
 ### Critical Success Factors
 - **Orbital cursor must feel smooth and intuitive** → Unique mechanic, must nail it
-- **Mana management must feel tactical, not frustrating** → Core differentiator
-- **Boss at level 5 must be rewarding** → Validates boss rhythm
-- **Fog of war must enhance, not annoy** → Atmosphere vs frustration balance
-- **Sorceress visual progression** → Satisfying power fantasy feedback
+- **Energy management must feel tactical, not frustrating** → Core differentiator
+- **Random events must be exciting** → Validates event system
+- **Spherical map wrapping must be seamless** → Unique feature, no jarring transitions
+- **Exfiltration timer creates tension** → Risk/reward decision making
 
 ## Assets Needed (MVP)
 
 **Keep it simple - placeholders first, polish later**
 
-- Sorceress sprite: 32x32 girl (static, no animation)
+- Player sprite: 32x32 survivor (static, no animation)
 - **Orbital cursor**: White cross (16x16 or simple +) that follows circle
-- Entity sprites: 32x32 dark silhouettes (Ombre, Spectre, Demon)
-- Boss sprite: 64x64 large shadow with red glowing eyes
-- Spell projectiles: Colored circles (blue for Gleam, red/orange for Fireball)
-- UI: Colored rectangles (red HP, glowing blue mana, purple XP)
-- Map: Solid dark background
-- Light: Semi-transparent white circle shader (150px radius)
-- **Cursor circle guide**: Thin white circle outline (150px) showing orbital path (optional, can help players)
-- VFX: Simple white/blue particles
+- Creature sprites: 32x32 alien forms (Crawler, Flyer, Predator)
+- Boss sprite: 64x64 large alien creature
+- Weapon projectiles: Colored shapes (blue laser for Blaster, red orb for Plasma)
+- UI: Colored rectangles (red HP, glowing cyan energy, purple XP)
+- Map: Planet surface texture (simple, repeating)
+- **Spherical minimap**: Circle with dots (player position + crashed ship)
+- **Cursor circle guide**: Thin white circle outline (150px) showing orbital path (optional)
+- VFX: Simple particles (death, explosion)
 
 **Music/SFX:**
-- 1 dark ambient cave track (loop)
-- 1 epic boss track
-- Basic SFX: spell cast, impact, death, level-up
+- 1 ambient space/planet track (loop)
+- 1 epic boss/event track
+- Basic SFX: weapon fire, impact, death, level-up
 
 ## Testing & Validation
 
 After MVP completion, test with 3 external players:
 
-1. "After 10 min (including boss), do you want to replay?"
-2. "Is mana management interesting or frustrating?"
-3. "Does boss at level 5 arrive at the right time?"
-4. "Is dark ambiance + light enjoyable or annoying?"
+1. "After 10 min (including events), do you want to replay?"
+2. "Is energy management interesting or frustrating?"
+3. "Do random events feel exciting and rewarding?"
+4. "Is the spherical planet map intuitive or confusing?"
 5. "Do you feel progressively more powerful?"
 
 If <2/3 say yes to Q1 → Core loop problem
-If mana feels frustrating → Rebalance regen speed or spell costs
-If boss timing off → Adjust level-up frequency
-If darkness annoying → Increase light radius
+If energy feels frustrating → Rebalance regen speed or weapon costs
+If events feel bad → Adjust spawn chances or rewards
+If map confusing → Improve minimap or visual feedback
 
 ## Important Files to Reference
 
-- **GDD.md** - Complete game design, all systems detailed
-- **GDD.md MVP section** - Features checklist and forbidden scope creep
-- **GDD.md Combat System** - Detailed spell/mana/boss mechanics
-- **GDD.md config.ron** - Balance values reference
+- **doc/GDD.md** - Complete game design, all systems detailed
+- **doc/GDD.md MVP section** - Features checklist and forbidden scope creep
+- **doc/GDD.md Combat System** - Detailed weapon/energy/event mechanics
+- **doc/GDD.md config.ron** - Balance values reference
+- **doc/decisions.md** - Design decisions made by team
 
 ## When Starting Development
 
 1. Setup Bevy project with ECS architecture
 2. Create `config.ron` with all balance values
-3. Implement mana system FIRST (core differentiator)
-4. Test mana feel before adding complexity
-5. Add fog of war lighting early (impacts entire gameplay)
-6. Keep boss simple - validate pattern fun before adding complexity
+3. Implement energy system FIRST (core differentiator)
+4. Test energy feel before adding complexity
+5. Implement spherical world wrapping early (impacts entire gameplay)
+6. Keep events simple - validate fun before adding complexity
 7. Playtest every 2 weeks minimum
 
 ## Universe & Lore (Brief)
 
-- **Setting**: World where magic has vanished
-- **Protagonist**: Sorceress trapped in hostile cave
-- **Mission**: Recover lost magic by defeating guardians
-- **Progression**: Each boss drops Magic Fragment + reveals lore
-- **Endgame**: Level 100 unlocks new character with own story
-- **Tone**: Dark Fantasy, environmental storytelling, minimal text
+- **Setting**: Hostile alien planet, post-crash survival
+- **Protagonist**: Crashed survivor waiting for exfiltration
+- **Mission**: Survive until rescue arrives
+- **Progression**: Events provide loot and challenge
+- **Meta**: Resources spent on permanent upgrades between runs
+- **Tone**: Sparse sci-fi, desperate survival, minimal narrative
 
 ---
 
 Remember: **Fun > Beautiful** for MVP. A ugly but fun game beats a beautiful but boring one.
 - Je voudrais qu'en tant qu'assistant de l'équipe tu gardes tout le temps à l'esprit de nous aider à terminer ce jeu et éviter de perdre du temps et de s'égarer et de ne jamais pouvoir finir le jeu. Je pense important de faire simple et minimaliste. Si possible de definir un maximum de contraintes
 - tout cela c'est bien mais je n'aime pas les commentaires inutiles dans le code. Moins il y a de code mieux c'est
+- Le seul gdd valide est le fichier de base gdd.md

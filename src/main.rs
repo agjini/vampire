@@ -56,7 +56,8 @@ impl Plugin for AppPlugin {
             menus::plugin,
             screens::plugin,
             theme::plugin,
-        )).insert_resource(Gravity::ZERO);
+        ))
+        .insert_resource(Gravity::ZERO);
 
         // Order new `AppSystems` variants by adding them here:
         app.configure_sets(

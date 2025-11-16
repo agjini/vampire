@@ -1,8 +1,7 @@
 # Game Design Document
 
-**Titre** : Sorceleuse
-**Sous-titre** : Eclipse of Magic
-**Projet** : Survivor-like skill-based avec système de magie
+**Titre** : Colonie terminus
+**Projet** : Survivor-like skill-based avec système magie/tech
 **Équipe** : Indie collaborative (temps libre)
 **Cible** : PC (Steam) → Mobile premium
 **Moteur** : Bevy (Rust)
@@ -12,60 +11,59 @@
 
 ## Vision en 3 phrases
 
-Dans un monde où **la magie a disparu**, vous incarnez une Sorceleuse piégée dans une cave sombre et hostile. Armée d'un simple bâton magique, vous affrontez des hordes d'entités pendant **15 minutes** en utilisant des sorts à jauge. Chaque boss vaincu libère un fragment de magie et révèle l'histoire oubliée de ce monde.
+Votre vaisseau s'écrase sur une **planète hostile inconnue**. Vous devez **survivre jusqu'à l'exfiltration** en affrontant des hordes de créatures extraterrestres, équipé d'un mélange de technologie et de magie. Chaque run dure le temps que vous choisissez, mais plus vous restez, plus les récompenses sont grandes.
 
 ---
 
 ## Pourquoi ce jeu sera FUN
 
-### 1. Système de magie à jauge = Ressource management intense
-- **Chaque sort consomme de la magie** → Gestion tactique de la jauge
+### 1. Système magie/tech avec jauge = Ressource management
+- **Chaque action consomme de l'énergie** → Gestion tactique de la jauge
 - Jauge se recharge avec le temps → Équilibre risque/récompense
-- Lancer un gros sort au mauvais moment = danger de mort
+- Lancer une grosse attaque au mauvais moment = danger de mort
 - Skill rewarding : **timing > spam**
 
 ### 2. Choix tactiques constants
-- **2 sorts + 4 passifs** max → Chaque level-up est crucial
-- "Prendre ce nouveau sort ou améliorer l'existant ?"
-- Synergies à découvrir entre sorts et passifs magiques
+- **2 armes + 4 passifs** max → Chaque level-up est crucial
+- "Prendre cette nouvelle arme ou améliorer l'existante ?"
+- Synergies à découvrir entre tech et magie
 
 ### 3. "Une dernière run" addictif
-- Runs courtes (**15 min**) → Parfait pour "juste une partie"
-- Mort permanente → "Si j'avais mieux géré ma jauge..."
-- Boss tous les **5 niveaux** avec lore → Progression narrative
+- **Tu choisis la durée** (5-30 min) avant le départ
+- Mort avant exfiltration = perte des gains de la run
+- Events aléatoires (boss, vaisseau crashé) → Opportunités risquées
+- Meta-progression conservée à chaque mort
 
 ### 4. Montée en puissance gratifiante
-- Niveau 1 : Bâton avec lumière faible, tu survis à peine dans le noir
-- Niveau 10 : Premier boss vaincu, nouveau sort débloqué, tu domines
-- Niveau 15 : Tu chaînes les sorts, explosions magiques partout
-- **Chaque boss = nouveau pouvoir** → Récompense immédiate
+- Début : Équipement de base, tu survies à peine
+- Milieu : Events maîtrisés, nouvelles armes, tu domines
+- Fin : Tu chaînes les attaques, explosions partout
+- **Chaque event = opportunité de loot**
 
-### 5. Univers dark fantasy immersif
-- **Ambiance sombre** : Cave hostile, entités menaçantes
-- **Narration environnementale** : Chaque boss révèle un fragment d'histoire
-- **Progression cosmétique** : La Sorceleuse s'illumine au fur et à mesure qu'elle récupère la magie
-- Niveau 100 → Nouveau personnage avec sa propre histoire
+### 5. Univers spatial dépouillé et désespéré
+- **Planète hostile** : Environnement minimaliste et dangereux
+- **Situation de survie** : Crashé, seul, attendre l'exfiltration
+- **Carte sphérique** : Tu tournes à l'infini sur la planète
+- **Minimap sphérique** : Point de position + vaisseau crashé
 
 ---
 
 ## Core Gameplay Loop
 
 ```
-Spawn cave sombre → Lancer sorts (viser souris) → Gérer jauge magie → Tuer entités → Ramasser XP
+Crash sur planète → Choisir durée exfiltration → Survivre → Tuer créatures → Ramasser loot
     ↓
-Level up (toutes les 30-60s) → Choisir 1 amélioration parmi 3
+Level up (30-60s) → Choisir 1 amélioration parmi 3
     ↓
-Upgrade sort OU nouveau passif OU nouveau sort (si <2)
+Upgrade arme OU nouveau passif OU nouvelle arme (si <2)
     ↓
-Tous les 5 niveaux → BOSS avec pattern unique
+Events aléatoires → Boss pop OU Vaisseau crashé (loot)
     ↓
-Victoire boss → Fragment de magie + Lore + Sort aléatoire garanti
+Devenir plus puissant → Difficulté augmente exponentiellement
     ↓
-Devenir plus puissante → Difficulté augmente exponentiellement
+Mourir (perte gains run) OU Exfiltration réussie (récompenses)
     ↓
-Mourir OU Niveau 15 (victoire) OU Niveau 100 (unlock nouveau perso)
-    ↓
-Dépenser fragments de magie → Améliorer stats permanentes → RETRY
+Meta-progression → Améliorer personnage permanent → RETRY
 ```
 
 ---
@@ -74,91 +72,94 @@ Dépenser fragments de magie → Améliorer stats permanentes → RETRY
 
 | Question | Décision | Raison |
 |----------|----------|--------|
-| **Système de combat** | Magie à jauge | Différenciation vs VS, resource management skill-based |
-| **Durée run** | 15 min (niveau 15) | Sessions courtes, intense, temps libre friendly |
-| **Mort** | Permanente stricte | Roguelite pur, encourage retry |
-| **Limite build** | 2 sorts + 4 passifs | Choix tactiques forcés, gestion jauge magie |
-| **Boss** | Tous les 5 niveaux | Rythme, récompenses (sorts), narration |
-| **Personnage MVP** | Sorceleuse (fille) | Thème magie, progression cosmétique (s'illumine) |
-| **Monnaie** | Fragments de magie | Cohérent avec univers, méta-progression |
-| **Monétisation mobile** | Premium payant | Cohérent Steam, pas de P2W |
-| **Multijoueur** | Solo MVP, coop future | Focus qualité single-player d'abord |
+| **Thème** | Exploration spatiale | Style dépouillé, situation désespérée, faisable |
+| **Combat** | Magie/Tech avec jauge | Resource management skill-based |
+| **Durée run** | Choix joueur (5-30 min) | Flexibilité, reward scaling |
+| **Mort** | Perte gains run, garde méta | Roguelite, encourage retry stratégique |
+| **Limite build** | 2 armes + 4 passifs | Choix tactiques forcés |
+| **Carte** | Planète sphérique infinie | Unique, pas d'obstacles, simple |
+| **Fog of war** | Non | Pas justifié, simplifie le développement |
+| **Minimap** | Sphérique (position + vaisseau) | Référence spatiale claire |
+| **Loot** | Ennemis drop en mourant | Système simple et lisible |
+| **Events** | Boss aléatoires, vaisseaux crashés | Opportunités risquées, variété |
+| **Exfiltration** | Temps choisi au départ | Stratégie risk/reward |
 
 ---
 
 ## MVP (Level 1) - 2-3 mois
 
 ### Objectif unique
-**Valider que le core loop magie + boss est FUN en 10 minutes de jeu.**
+**Valider que le core loop magie/tech + events est FUN en 10 minutes de jeu.**
 
 ### Features OBLIGATOIRES
-- [ ] **Personnage : Sorceleuse** : Déplacement WASD fluide, sprite 32x32, fille
-- [ ] **Système de jauge de magie** :
+- [ ] **Personnage** : Déplacement WASD fluide, sprite 32x32
+- [ ] **Système de jauge d'énergie** :
   - Jauge max 100 points
   - Régénération 20 points/seconde
-  - Chaque sort coûte X points
-  - Visuel : Barre bleue lumineuse
-- [ ] **Lancer de sort manuel** : Clic souris = lance sort dans direction visée (consomme jauge)
-- [ ] **2 sorts de départ** :
-  - **Lueur (Lumière)** : Sort de base, projectile lumineux, coût 10 mana, cadence rapide, dégâts 15
-  - **Boule de feu** : Sort déblocable niveau 3, projectile explosif, coût 30 mana, cadence lente, dégâts 50 zone
-- [ ] **3 types d'entités** :
-  - Ombre rampante : Lente, faible HP, spawn en groupe, sensible à la lumière
-  - Spectre : Vitesse moyenne, traverse les obstacles, vulnérable à la magie
-  - Démon mineur : Rapide, résistant, dangereux au corps-à-corps
-- [ ] **Premier BOSS (niveau 5)** :
-  - Gardien des Ténèbres : 500 HP, pattern d'attaque simple (charge + projectiles)
-  - Drop garanti : Fragment de magie + Nouveau sort aléatoire
-  - Cinématique courte avant/après (texte + illustration)
-- [ ] **Système XP** : Cristaux magiques drop, ramassage auto dans rayon, barre XP
+  - Chaque action coûte X points
+  - Visuel : Barre bleue/cyan lumineuse
+- [ ] **Tir manuel** : Clic souris = tire arme dans direction visée (consomme jauge)
+- [ ] **2 armes de départ** :
+  - **Blaster** : Arme de base, projectile rapide, coût 10 énergie, dégâts 15
+  - **Lance-plasma** : Déblocable niveau 3, projectile explosif, coût 30 énergie, dégâts 50 zone
+- [ ] **3 types de créatures** :
+  - Grouilleur : Lent, faible HP, spawn en groupe
+  - Voltigeur : Vitesse moyenne, déplacement erratique
+  - Prédateur : Rapide, résistant, dangereux
+- [ ] **Event Boss aléatoire** :
+  - Gardien planétaire : 500 HP, pattern simple (charge + projectiles)
+  - Drop garanti : Loot rare
+  - Probabilité d'apparition : 20% tous les 3 niveaux
+- [ ] **Event Vaisseau crashé** :
+  - Zone de loot riche avec vague de créatures
+  - Probabilité d'apparition : 15% tous les 2 niveaux
+- [ ] **Système XP** : Cristaux drop, ramassage auto dans rayon, barre XP
 - [ ] **Level-up** : Pause jeu, choix 3 cartes aléatoires
 - [ ] **6 améliorations** :
-  - Nouveau sort (si <2)
-  - +Dégâts sort actuel (+20%)
-  - +Vitesse recharge mana (+15%)
+  - Nouvelle arme (si <2)
+  - +Dégâts arme actuelle (+20%)
+  - +Vitesse recharge énergie (+15%)
   - +Vitesse déplacement (passif, +10%)
   - +HP max (passif, +20)
   - +Zone collecte cristaux (passif, +20px)
-- [ ] **Système fragments de magie** : Drops boss + petits drops ennemis, compteur, conservés à la mort
-- [ ] **Spawn continu** : Entités apparaissent aux bords, densité croît avec temps
-- [ ] **Difficulté progressive** : +15% HP entités toutes les 30s
+- [ ] **Carte sphérique** : Planète qui se répète à l'infini, pas d'obstacles
+- [ ] **Minimap sphérique** : Point position joueur + vaisseau crashé
+- [ ] **Timer exfiltration** : Choix durée au départ (5/10/15/20/30 min)
+- [ ] **Spawn continu** : Créatures apparaissent aux bords, densité croît avec temps
+- [ ] **Difficulté progressive** : +15% HP créatures toutes les 30s
 - [ ] **UI minimale** :
   - Barre vie (haut gauche, rouge)
-  - Barre magie (au-dessus vie, bleue lumineuse)
+  - Barre énergie (au-dessus vie, cyan lumineuse)
   - Barre XP (bas, violette)
-  - Timer + Niveau (haut centre)
-  - Fragments de magie (haut droit, icône cristal)
-- [ ] **Ambiance cave sombre** :
-  - Fond noir/gris très sombre
-  - Lumière autour de la Sorceleuse (cercle lumineux)
-  - Entités apparaissent dans l'obscurité (fog of war)
+  - Timer exfiltration (haut centre, compte à rebours)
+  - Minimap (bas droite, sphérique)
 
 ### Features INTERDITES (scope creep)
-- ❌ Pas de multiples boss (1 seul boss niveau 5 pour MVP)
-- ❌ Pas de biomes multiples (cave sombre uniquement)
-- ❌ Pas de méta-progression dépensable (Level 2 : menu upgrades permanents)
-- ❌ Pas d'éléments complexes Feu/Glace/Foudre avec synergies (Level 3)
-- ❌ Pas de spécialisations de sorts / évolutions (Level 3)
-- ❌ Pas de multiples personnages (Sorceleuse uniquement pour MVP)
+- ❌ Pas de multiples biomes (planète unique)
+- ❌ Pas de menu méta-progression dépensable (Level 2)
+- ❌ Pas d'éléments complexes avec synergies (Level 3)
+- ❌ Pas d'évolutions d'armes complexes (Level 3)
+- ❌ Pas de multiples personnages (1 seul pour MVP)
 - ❌ Pas d'animations complexes (sprites statiques OK)
-- ❌ Pas de cinématiques élaborées (texte simple suffit)
+- ❌ Pas d'obstacles sur la planète (carte plate)
+- ❌ Pas de fog of war (pas nécessaire)
 
 ### Test de validation FUN
 À la fin du MVP, testez avec 3 personnes externes :
 
-**Question 1** : "Après 10 min (jusqu'au boss), as-tu envie de rejouer ?"
+**Question 1** : "Après 10 min, as-tu envie de rejouer ?"
 → Si <2/3 disent oui → PROBLÈME CORE LOOP
 
-**Question 2** : "La gestion de la jauge de magie est-elle intéressante ou frustrante ?"
-→ Si frustrante → REBALANCER vitesse recharge ou coût sorts
+**Question 2** : "La gestion de la jauge d'énergie est-elle intéressante ou frustrante ?"
+→ Si frustrante → REBALANCER vitesse recharge ou coût armes
 
-**Question 3** : "Le boss niveau 5 semble arriver au bon moment ?"
-→ Si trop tôt/tard → AJUSTER fréquence level-up ou timing boss
+**Question 3** : "Les events aléatoires arrivent au bon moment ?"
+→ Si timing off → AJUSTER probabilités ou fréquence
 
-**Question 4** : "L'ambiance sombre + lumière te plaît ou c'est juste chiant ?"
-→ Si chiant → AUGMENTER rayon lumineux ou ajouter plus de clarté
+**Question 4** : "La carte sphérique est-elle agréable ou déroutante ?"
+→ Si déroutante → AMÉLIORER minimap ou repères visuels
 
-**Question 5** : "Sens-tu que tu deviens plus puissante progressivement ?"
+**Question 5** : "Sens-tu que tu deviens plus puissant progressivement ?"
 → Si non → PROBLÈME SCALING dégâts/améliorations
 
 ---
@@ -167,48 +168,48 @@ Dépenser fragments de magie → Améliorer stats permanentes → RETRY
 
 ### Contrôles
 - **WASD** : Déplacement 8 directions
-- **Souris** : Déplace curseur orbital (croix) sur cercle autour de la Sorceleuse (rayon 150px = rayon lumière)
-- **Clic gauche** : Lancer sort slot 1 vers le curseur (si mana suffisante)
-- **Clic droit** : Lancer sort slot 2 vers le curseur (si équipé ET mana suffisante)
+- **Souris** : Déplace curseur orbital (croix) sur cercle autour du personnage (rayon 150px)
+- **Clic gauche** : Tirer arme slot 1 vers le curseur (si énergie suffisante)
+- **Clic droit** : Tirer arme slot 2 vers le curseur (si équipée ET énergie suffisante)
 - **Espace** : Dash/esquive (cooldown 5s) - *Optionnel MVP*
 
-**Mécanique unique : Curseur orbital**
-- Le curseur (croix blanche) reste toujours sur un cercle de 150px autour de la Sorceleuse
+**Mécanique curseur orbital**
+- Le curseur (croix) reste toujours sur un cercle de 150px autour du personnage
 - Bouger la souris déplace le curseur sur ce cercle
-- Les sorts sont lancés vers la position du curseur
-- **Avantages** : Focus constant sur Sorceleuse, mobile-friendly, unique, cohérent avec rayon de lumière
+- Les armes tirent vers la position du curseur
+- **Avantages** : Focus constant sur personnage, mobile-friendly, unique
 
-### Système de mana
+### Système d'énergie
 - **Jauge max** : 100 points
 - **Régénération** : 20 points/seconde (5 secondes pour full recharge)
-- **Visuel** : Barre bleue lumineuse qui pulse légèrement
-- **Son** : "Ding" cristallin quand jauge pleine
+- **Visuel** : Barre cyan lumineuse qui pulse légèrement
+- **Son** : "Bip" électronique quand jauge pleine
 
-### Lueur (sort de départ)
-- **Coût mana** : 10 points
+### Blaster (arme de départ)
+- **Coût énergie** : 10 points
 - **Dégâts** : 15
-- **Cadence** : ~2 coups/s (limité par mana)
+- **Cadence** : ~2 coups/s (limité par énergie)
 - **Portée** : 350px
-- **Projectile** : Orbe lumineux blanc/bleu, vitesse 280px/s
-- **Feel** : Spammable, fiable, éclaire la zone autour
+- **Projectile** : Laser bleu, vitesse 280px/s
+- **Feel** : Spammable, fiable, précis
 
-### Boule de feu (sort déblocable niveau 3)
-- **Coût mana** : 30 points
+### Lance-plasma (arme déblocable niveau 3)
+- **Coût énergie** : 30 points
 - **Dégâts** : 50 (zone 80px rayon)
-- **Cadence** : ~0.6 coups/s (limité par mana)
+- **Cadence** : ~0.6 coups/s (limité par énergie)
 - **Portée** : 300px
 - **Projectile** : Boule orange/rouge, vitesse 200px/s, explose à l'impact
-- **Feel** : Puissant, explosif, vide la jauge rapidement, high-risk/reward
+- **Feel** : Puissant, explosif, vide la jauge rapidement
 
-### Entités (stats MVP)
+### Créatures (stats MVP)
 
-| Type | HP | Speed | Damage | Comportement | Drop Cristal XP |
-|------|-----|-------|--------|--------------|-----------------|
-| Ombre rampante | 25 | 40px/s | 8 | Poursuite lente, fuit la lumière | 5 |
-| Spectre | 45 | 90px/s | 12 | Traverse obstacles, poursuite directe | 10 |
-| Démon mineur | 60 | 110px/s | 18 | Sprint agressif vers joueur | 15 |
+| Type | HP | Speed | Damage | Comportement | Drop XP |
+|------|-----|-------|--------|--------------|---------|
+| Grouilleur | 25 | 40px/s | 8 | Poursuite lente en groupe | 5 |
+| Voltigeur | 45 | 90px/s | 12 | Déplacement erratique, rapide | 10 |
+| Prédateur | 60 | 110px/s | 18 | Sprint agressif vers joueur | 15 |
 
-### Boss MVP : Gardien des Ténèbres (niveau 5)
+### Event Boss : Gardien planétaire
 
 | Stat | Valeur |
 |------|--------|
@@ -218,60 +219,64 @@ Dépenser fragments de magie → Améliorer stats permanentes → RETRY
 | Damage projectiles | 15 |
 
 **Pattern d'attaque** :
-1. Phase 1 (500-250 HP) : Charge lente vers joueur + tire 1 projectile toutes les 2s
+1. Phase 1 (500-250 HP) : Charge lente + tire 1 projectile toutes les 2s
 2. Phase 2 (250-0 HP) : Vitesse +50%, tire 3 projectiles en éventail toutes les 1.5s
-3. Mort : Explosion de lumière, drop garanti Fragment de magie + Sort aléatoire
+3. Mort : Explosion, drop garanti loot rare
 
-**Visuel** : Grande silhouette sombre (64x64), yeux rouges lumineux
+**Visuel** : Grande créature (64x64), aspect alien menaçant
 
-**Musique** : Track épique s'enclenche à l'apparition
+**Déclenchement** : 20% de chance tous les 3 niveaux
 
-### Scaling difficulté (15 min pour niveau 15)
+### Event Vaisseau crashé
+- **Déclenchement** : 15% de chance tous les 2 niveaux
+- **Zone** : Cercle 200px rayon avec loot au centre
+- **Ennemis** : Vague de 15-20 créatures qui spawn autour
+- **Loot** : 2-3 items rares garantis
 
-| Temps/Niveau | HP entités | Spawn rate | Événement |
-|--------------|------------|------------|-----------|
-| Niveau 1-3 | 100% | 1 entité/s | Introduction, apprendre contrôles |
-| Niveau 3-5 | 140% | 2 entités/s | Intensification, Boule de feu disponible |
-| Niveau 5 | - | PAUSE | **BOSS : Gardien des Ténèbres** |
-| Niveau 6-8 | 180% | 3 entités/s | Post-boss, nouveau sort équipé |
-| Niveau 9-12 | 230% | 5 entités/s | Hordes denses, gestion mana critique |
-| Niveau 13-15 | 320% | 8 entités/s | Survie extrême |
-| Niveau 15 | - | - | **VICTOIRE** (~15 min) |
+### Scaling difficulté
+
+| Temps/Niveau | HP créatures | Spawn rate | Événement |
+|--------------|--------------|------------|-----------|
+| Niveau 1-3 | 100% | 1 créature/s | Introduction, apprendre contrôles |
+| Niveau 3-5 | 140% | 2 créatures/s | Intensification, Lance-plasma disponible |
+| Niveau 6-8 | 180% | 3 créatures/s | Premiers events possibles |
+| Niveau 9-12 | 230% | 5 créatures/s | Hordes denses, gestion énergie critique |
+| Niveau 13-15 | 320% | 8 créatures/s | Survie extrême |
+| Niveau 15+ | +15%/30s | +1/min | Scaling continu jusqu'à exfiltration |
 
 ---
 
 ## Configuration Technique (Bevy)
 
-### Architecture ECS recommandée
+### Architecture ECS
 
 ```rust
-// Components
-struct Sorceress {
+struct Player {
     hp: f32,
     max_hp: f32,
     speed: f32,
-    mana: f32,
-    max_mana: f32,
-    mana_regen: f32,  // points/seconde
+    energy: f32,
+    max_energy: f32,
+    energy_regen: f32,
 }
 
-struct Entity {
+struct Creature {
     hp: f32,
     damage: f32,
-    entity_type: EntityType  // Ombre, Spectre, Demon
+    creature_type: CreatureType,
 }
 
 struct Boss {
     hp: f32,
     max_hp: f32,
-    phase: BossPhase,  // Phase1, Phase2
+    phase: BossPhase,
     attack_timer: f32,
 }
 
-struct Spell {
+struct Weapon {
     damage: f32,
-    mana_cost: f32,
-    cast_cooldown: f32,  // temps entre 2 casts
+    energy_cost: f32,
+    cast_cooldown: f32,
     last_cast: f32,
 }
 
@@ -279,56 +284,62 @@ struct Projectile {
     damage: f32,
     speed: f32,
     lifetime: f32,
-    is_aoe: bool,  // pour Boule de feu
+    is_aoe: bool,
     aoe_radius: f32,
 }
 
 struct XpCrystal { value: u32 }
-struct MagicFragment { value: u32 }
 
-struct LightSource {
-    radius: f32,  // pour fog of war
-    intensity: f32,
+struct SphericalWorld {
+    radius: f32,
+    circumference: f32,
 }
 
-// Systems (ordre d'exécution)
-1. input_system (lecture inputs clavier/souris)
-2. mana_regen_system (régénération mana joueur)
-3. movement_system (déplacement Sorceleuse + entités)
-4. spell_system (gestion cast sorts avec coût mana)
-5. projectile_system (déplacement projectiles + détection AoE)
-6. collision_system (dégâts, collecte cristaux)
-7. boss_ai_system (IA du boss si spawné)
-8. spawn_system (génération entités + boss)
-9. level_up_system (gestion XP et upgrades)
-10. lighting_system (fog of war + zones éclairées)
-11. ui_system (affichage HUD : vie, mana, XP)
+struct OrbitalCursor {
+    angle: f32,
+    radius: f32,
+    target_angle: f32,
+}
 ```
 
-### Fichier de configuration (config.ron)
+### System ordre d'exécution
+1. input_system
+2. orbital_cursor_system
+3. energy_regen_system
+4. movement_system
+5. spherical_world_wrapping_system
+6. weapon_system
+7. projectile_system
+8. collision_system
+9. boss_ai_system
+10. spawn_system
+11. event_system
+12. level_up_system
+13. ui_system
+
+### config.ron
 
 ```ron
 (
-    sorceress: (
+    player: (
         hp: 100.0,
-        max_mana: 100.0,
-        mana_regen: 20.0,  // points/seconde
+        max_energy: 100.0,
+        energy_regen: 20.0,
         speed: 140.0,
         collect_radius: 70.0,
-        light_radius: 150.0,  // rayon lumière autour d'elle
     ),
-    spells: {
-        "lueur": (
+    weapons: {
+        "blaster": (
             damage: 15.0,
-            mana_cost: 10.0,
-            cast_cooldown: 0.3,  // secondes
+            energy_cost: 10.0,
+            cast_cooldown: 0.3,
             projectile_speed: 280.0,
             range: 350.0,
             is_aoe: false,
         ),
-        "boule_de_feu": (
+        "lance_plasma": (
             damage: 50.0,
-            mana_cost: 30.0,
+            energy_cost: 30.0,
             cast_cooldown: 0.5,
             projectile_speed: 200.0,
             range: 300.0,
@@ -336,25 +347,33 @@ struct LightSource {
             aoe_radius: 80.0,
         ),
     },
-    entities: {
-        "ombre": (hp: 25.0, speed: 40.0, damage: 8.0, xp: 5),
-        "spectre": (hp: 45.0, speed: 90.0, damage: 12.0, xp: 10, can_pass_walls: true),
-        "demon": (hp: 60.0, speed: 110.0, damage: 18.0, xp: 15),
+    creatures: {
+        "grouilleur": (hp: 25.0, speed: 40.0, damage: 8.0, xp: 5),
+        "voltigeur": (hp: 45.0, speed: 90.0, damage: 12.0, xp: 10),
+        "predateur": (hp: 60.0, speed: 110.0, damage: 18.0, xp: 15),
     },
     boss: (
-        "gardien_tenebres": (
-            hp: 500.0,
-            speed: 60.0,
-            damage_contact: 25.0,
-            damage_projectile: 15.0,
-            phase2_hp_threshold: 250.0,  // passe en phase 2 à 50% HP
-            phase2_speed_mult: 1.5,
-        ),
+        hp: 500.0,
+        speed: 60.0,
+        damage_contact: 25.0,
+        damage_projectile: 15.0,
+        phase2_hp_threshold: 250.0,
+        phase2_speed_mult: 1.5,
+        spawn_chance: 0.2,
+        spawn_every_n_levels: 3,
+    ),
+    crashed_ship_event: (
+        spawn_chance: 0.15,
+        spawn_every_n_levels: 2,
+        enemy_count: 18,
+        loot_count: 3,
+    ),
+    spherical_world: (
+        radius: 2000.0,
     ),
     difficulty_curve: [
         (level: 1, hp_mult: 1.0, spawn_rate: 1.0),
         (level: 3, hp_mult: 1.4, spawn_rate: 2.0),
-        (level: 5, hp_mult: 1.0, spawn_rate: 0.0),  // BOSS
         (level: 6, hp_mult: 1.8, spawn_rate: 3.0),
         (level: 9, hp_mult: 2.3, spawn_rate: 5.0),
         (level: 13, hp_mult: 3.2, spawn_rate: 8.0),
@@ -366,19 +385,18 @@ struct LightSource {
 
 ## Différenciateurs vs Vampire Survivors
 
-| Aspect | Vampire Survivors | Sorceleuse |
+| Aspect | Vampire Survivors | Colonie terminus |
 |--------|-------------------|------------------|
-| **Système de combat** | Attaques auto | Magie manuelle avec curseur orbital |
-| **Visée** | Auto-aim | Curseur sur cercle autour du joueur (unique) |
-| **Ressource** | Aucune | Gestion mana (resource management) |
-| **Durée** | 30 min | 15 min (intense) |
-| **Build** | Illimité (6+ armes) | 2 sorts + 4 passifs (choix tactiques) |
-| **Boss** | Absents (sauf DLC) | Boss tous les 5 niveaux avec lore |
-| **Narration** | Minimale | Histoire révélée par les boss |
-| **Progression** | Cosmétique neutre | Sorceleuse s'illumine (progression visuelle) |
-| **Ambiance** | Coloré, cartoon | Dark Fantasy, cave sombre, fog of war |
-| **Feel** | Chill, zen | Tendu, tactique, gestion ressource |
-| **Difficulté** | Casual accessible | Skill ceiling élevé (timing sorts) |
+| **Combat** | Auto-attaque | Tir manuel avec curseur orbital |
+| **Visée** | Auto-aim | Curseur sur cercle (unique) |
+| **Ressource** | Aucune | Gestion énergie |
+| **Durée** | 30 min fixe | Choix joueur (5-30 min) |
+| **Build** | Illimité | 2 armes + 4 passifs |
+| **Events** | Aucun | Boss + vaisseaux crashés aléatoires |
+| **Carte** | Rectangle fixe | Planète sphérique infinie |
+| **Narration** | Minimale | Situation survie spatiale |
+| **Ambiance** | Coloré cartoon | Spatial dépouillé, désespéré |
+| **Feel** | Chill zen | Tendu tactique |
 
 ---
 
@@ -387,93 +405,85 @@ struct LightSource {
 ### Avant de coder (semaine 1)
 - [x] Moteur choisi : Bevy
 - [x] Décisions design finalisées
-- [x] Univers défini : Eclipse of Magic
-- [ ] Repo Git créé avec structure Bevy
-- [ ] Sprite Sorceleuse 32x32 (fille, placeholder OK)
-- [ ] 3 sprites entités 32x32 (Ombre, Spectre, Démon)
-- [ ] Sprite boss 64x64 (Gardien des Ténèbres)
-- [ ] Sprites projectiles : Lueur (orbe bleu), Boule de feu (orbe rouge)
+- [x] Univers défini : Colonie terminus (spatial)
+- [ ] Repo Git avec structure Bevy
+- [ ] Sprite personnage 32x32 (placeholder OK)
+- [ ] 3 sprites créatures 32x32
+- [ ] Sprite boss 64x64
+- [ ] Sprites projectiles : Blaster (laser bleu), Plasma (orbe rouge)
 - [ ] config.ron initial créé
-- [ ] Rôles équipe définis (qui code quoi, qui fait assets, etc.)
+- [ ] Rôles équipe définis
 
 ### Assets MVP (minimum viable)
-**Ne passez PAS 3 semaines sur les assets. Placeholder d'abord, polish après.**
-
-- **Sorceleuse** : 1 sprite statique fille 32x32, vêtements simples (animation = Level 2)
-- **Entités** : 1 sprite par type (silhouettes sombres suffisent)
-- **Boss** : 1 sprite 64x64 (grande silhouette + yeux rouges)
-- **Sorts** : Projectiles = cercles colorés (bleu pour Lueur, rouge/orange pour Feu)
-- **UI** : Rectangles de couleur (vie rouge, mana bleue lumineuse, XP violette)
-- **Map** : Fond noir/gris très sombre (cave)
-- **Lumière** : Cercle blanc semi-transparent autour Sorceleuse (shader simple)
-- **VFX** : Particules blanches/bleues simples (mort entité, explosion boss)
+- **Personnage** : 1 sprite statique 32x32
+- **Créatures** : 1 sprite par type (formes aliens simples)
+- **Boss** : 1 sprite 64x64 (grande créature menaçante)
+- **Armes** : Projectiles = traits/cercles colorés
+- **UI** : Rectangles colorés (vie rouge, énergie cyan, XP violette)
+- **Map** : Sol planète (texture simple répétitive)
+- **Minimap** : Cercle avec points (position + vaisseau)
+- **VFX** : Particules simples (mort créature, explosion)
 
 **Musique/SFX** :
-- 1 track ambiance sombre cave (loop)
-- 1 track boss épique
-- SFX basiques : cast sort, impact, mort, level-up
+- 1 track ambient spatial (loop)
+- 1 track event boss
+- SFX basiques : tir, impact, mort, level-up
 
-### Métriques de succès MVP
-- Framerate stable 60 FPS avec 100+ entités à l'écran
-- Input lag <50ms (cast sort instantané au clic)
-- Gestion mana fluide (régénération visible, pas de bug)
-- Fog of war fonctionnel (zone lumière visible)
-- Boss niveau 5 fun et challenging
-- 3/3 testeurs externes veulent rejouer après le boss
+### Métriques succès MVP
+- 60 FPS avec 100+ créatures
+- Input lag <50ms
+- Gestion énergie fluide
+- Carte sphérique wrapping fonctionnel
+- Events amusants et valorisants
+- 3/3 testeurs veulent rejouer
 
 ---
 
-## Roadmap Post-MVP (si MVP validé)
+## Roadmap Post-MVP
 
-### Level 2 : Méta-Progression & Boss (1-2 mois)
-- **Menu méta-progression** : Dépenser fragments de magie pour upgrades permanents
-- **2e et 3e boss** (niveaux 10 et 15) avec patterns uniques
-- **5 sorts au total** (3 nouveaux à débloquer)
-- **Pool de 12 passifs** pour variété builds
-- Obstacles destructibles sur la map (tonneaux, cristaux)
-- Animations Sorceleuse (marche, cast sort)
-- Particules et feedbacks visuels (screenshake, flash, traînées sorts)
-- **Lore** : Textes courts révélés après chaque boss
+### Level 2 : Méta-Progression (1-2 mois)
+- Menu méta-progression (dépenser gains)
+- 5 armes au total
+- Pool de 12 passifs
+- Animations personnage
+- Plus d'events variés
+- Particules et feedbacks visuels
 
-### Level 3 : Profondeur & Contenu (2-3 mois)
-- **Système d'éléments** : Feu/Glace/Foudre avec synergies
-- **Évolutions de sorts** : Spécialisations à niveau élevé (ex: Lueur → Rayon laser)
-- **2e personnage déblocable** (niveau 100 ou achievement)
-- **10 sorts différents**, 25 passifs
-- **Biome additionnel** : Crypte ou Forêt Maudite
-- Menu complet, achievements (30+)
-- Cosmétiques déblocables (couleurs sorts, skins Sorceleuse)
+### Level 3 : Profondeur (2-3 mois)
+- Système synergies magie/tech
+- Évolutions d'armes
+- 2e personnage déblocable
+- 10 armes, 25 passifs
+- Biome alternatif
+- Achievements
 
 ### Level 4 : Release Steam (1-2 mois)
-- Polish final (animations fluides, VFX élaborés)
-- **Musique et sound design complet** (5+ tracks, SFX variés)
-- **5 biomes** avec ambiances uniques
-- **6 boss** avec lore complète formant une histoire
-- Mode Infini (après niveau 15, continue jusqu'à la mort)
-- Tutoriel intégré (premier niveau guidé)
-- Leaderboards (temps survie, niveau max atteint)
-- **Préparation page Steam** : Trailer, screenshots, description
+- Polish final
+- Musique et sound design complet
+- 3-4 biomes planétaires
+- Mode Infini
+- Tutoriel
+- Leaderboards
 
 ---
 
 ## Notes de Production
 
-### Philosophie de développement
-1. **MVP d'abord, polish après** - Un jeu moche mais fun > un jeu beau mais chiant
-2. **Playtester SOUVENT** - Toutes les 2 semaines minimum
-3. **Couper sans pitié** - Si une feature ne rend pas le jeu plus fun, OUT
-4. **Data-driven** - Tout dans config.ron, ajustable sans recompile
-5. **Fun > Réalisme** - Exagérer les feedbacks, c'est un jeu vidéo pas une simulation
+### Mantras
+1. "Est-ce que ça rend le jeu plus FUN ?" (si non → cut)
+2. "MVP d'abord" (features = Level 2+)
+3. "Tester souvent" (toutes les 2 semaines)
+4. "Config file > hardcode"
 
-### Red flags à surveiller
+### Red flags
 🚩 "On pourrait ajouter..." sans finir l'existant
-🚩 Passer >2 jours sur un asset pour le MVP
-🚩 Coder une feature sans spec claire
-🚩 Ne pas tester le jeu pendant 2+ semaines
-🚩 Débattre >30min d'un détail sans trancher et avancer
+🚩 Passer >2 jours sur assets MVP
+🚩 Coder sans spec claire
+🚩 Ne pas tester pendant 2+ semaines
+🚩 Débattre >30min sans décider
 
-### Mantras de l'équipe
-- "Est-ce que ça rend le jeu plus FUN ?" (si non → poubelle)
-- "MVP d'abord" (feature = Level 2+)
-- "Teste avant de coder plus"
-- "Config file > hardcode"
+### Facteurs critiques
+- **Curseur orbital doit être fluide** → Mécanique unique
+- **Gestion énergie doit être tactique** → Core différenciateur
+- **Carte sphérique doit être intuitive** → Feature unique
+- **Events doivent être excitants** → Variété gameplay
