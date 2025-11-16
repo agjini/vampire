@@ -9,12 +9,12 @@ use bevy::{
 };
 
 use crate::{
-    asset_tracking::LoadResource, demo::{
+    AppSystems, PausableSystems,
+    asset_tracking::LoadResource,
+    demo::{
         animation::PlayerAnimation,
         movement::{MovementController, ScreenWrap},
     },
-    AppSystems,
-    PausableSystems,
 };
 
 pub(super) fn plugin(app: &mut App) {

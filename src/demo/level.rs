@@ -3,7 +3,7 @@
 use crate::{
     asset_tracking::LoadResource,
     audio::music,
-    demo::player::{player, PlayerAssets},
+    demo::player::{PlayerAssets, player},
     screens::Screen,
 };
 use avian2d::prelude::{Collider, RigidBody};
