@@ -2,6 +2,31 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## ⚠️ CRITICAL: Constraints First
+
+**Before doing ANYTHING on this project, Claude Code MUST:**
+
+1. **Read doc/CONSTRAINTS.md** - These are non-negotiable constraints based on team skills
+2. **Check the constraint** before proposing any solution
+3. **ALWAYS prefer the simplest solution** that respects constraints
+4. **REJECT any request** that violates constraints (explain why and propose alternative)
+
+**Key constraints to enforce:**
+- ❌ NO custom asset creation (geometric shapes or free assets only)
+- ❌ NO features outside MVP scope (see GDD.md)
+- ❌ NO complex animations, shaders, or polish during MVP
+- ❌ NO over-engineering (KISS principle)
+- ❌ NO refactoring working code during MVP
+- ✅ Simple code that works > elegant code that takes time
+- ✅ Max 2 weeks per feature (suggest cutting if longer)
+- ✅ Geometric placeholders always acceptable
+
+**When user asks for something violating constraints:**
+1. Politely explain which constraint it violates
+2. Explain WHY the constraint exists (team skills, time budget)
+3. Propose the simplest alternative that respects constraints
+4. Remind them: "Finishing MVP > Perfect implementation"
+
 ## Project Overview
 
 **Colonie terminus** - A space survival survivor-like game where you crash on a hostile planet.
@@ -14,16 +39,38 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Tech Stack**: Bevy (Rust) - ECS architecture
 - **Current Status**: Pre-production - concise GDD completed, ready to start MVP development
 
-## Key Design Document
+## Key Documents
 
-- **GDD.md** - Main Game Design Document
-  - Concise, actionable, fun-focused design specs
-  - Final design decisions with rationale
+### Design & Planning
+- **doc/GDD.md** - Main Game Design Document
+  - Complete game design, all systems detailed
   - MVP feature list and scope boundaries (Level 1)
-  - Detailed combat system (spells, mana, boss)
+  - Detailed combat system (weapons, energy, events)
   - Technical architecture for Bevy (ECS, config.ron pattern)
   - Production philosophy and red flags
   - Post-MVP roadmap (Level 2-4)
+
+- **doc/decisions.md** - Design Decisions
+  - All major design choices made by team
+  - Rationale for each decision
+
+### Constraints & Tracking (CRITICAL)
+- **doc/CONSTRAINTS.md** - Project Constraints
+  - **READ THIS FIRST** - Non-negotiable constraints based on team skills
+  - Assets: ZERO custom creation (geometric shapes or free assets only)
+  - Time: 2 weeks max per feature
+  - Scope: Extreme minimalism required
+  - Code: KISS principle strictly enforced
+  - Black list of forbidden features for MVP
+  - Realistic 3-month planning
+  - **This document guarantees we finish the MVP if respected**
+
+- **doc/WEEKLY_TRACKER.md** - Weekly Progress Tracker
+  - Fill every Friday to track constraint adherence
+  - Metrics: hours, code lines, feature progress
+  - Red flags monitoring (≥2 = critical danger)
+  - Dashboard with 12-week planning
+  - Probability of finishing MVP
 
 ## Game Design Pillars
 
@@ -327,6 +374,11 @@ If map confusing → Improve minimap or visual feedback
 
 ## Important Files to Reference
 
+**ALWAYS CHECK FIRST:**
+- **doc/CONSTRAINTS.md** - ⚠️ CRITICAL: Non-negotiable constraints, read before ANY work
+- **doc/WEEKLY_TRACKER.md** - Current progress and red flags
+
+**Design reference:**
 - **doc/GDD.md** - Complete game design, all systems detailed
 - **doc/GDD.md MVP section** - Features checklist and forbidden scope creep
 - **doc/GDD.md Combat System** - Detailed weapon/energy/event mechanics
