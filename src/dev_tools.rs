@@ -20,7 +20,7 @@ pub(super) fn plugin(app: &mut App) {
     app.add_plugins((
         EguiPlugin::default(),
         WorldInspectorPlugin::new().run_if(|debug_state: Res<DebugState>| debug_state.enabled),
-        PhysicsDebugPlugin::default(),
+        PhysicsDebugPlugin,
     ));
 
     app.insert_gizmo_config(
