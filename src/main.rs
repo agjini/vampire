@@ -36,7 +36,7 @@ impl Plugin for AppPlugin {
                 })
                 .set(WindowPlugin {
                     primary_window: Window {
-                        title: "Sorceleuse".to_string(),
+                        title: "Colonie Terminus".to_string(),
                         fit_canvas_to_parent: true,
                         ..default()
                     }

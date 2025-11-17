@@ -16,8 +16,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - ❌ NO features outside MVP scope (see GDD.md)
 - ❌ NO complex animations, shaders, or polish during MVP
 - ❌ NO over-engineering (KISS principle)
-- ❌ NO refactoring working code during MVP
-- ✅ Simple code that works > elegant code that takes time
+- ✅ Clean, minimal, well-structured code is MANDATORY
+- ✅ Disciplined refactoring is part of the process
 - ✅ Max 2 weeks per feature (suggest cutting if longer)
 - ✅ Geometric placeholders always acceptable
 
@@ -322,6 +322,16 @@ All game balance in `config.ron` for rapid iteration:
 2. "MVP first" (features belong in Level 2+)
 3. "Test before coding more"
 4. "Config file > hardcode"
+5. "Clean code is fast code in the long run"
+
+### Code Quality Principles
+- **Clean**: Code must be readable, well-organized, properly decoupled
+- **Minimal**: No unnecessary code, no useless comments, only what's needed
+- **Clear**: Intent is obvious, naming is precise, structure is logical
+- **Disciplined refactoring**: Regular, small refactorings keep code healthy
+- **No technical debt**: Fix problems immediately, don't accumulate mess
+
+**IMPORTANT**: Clean code ≠ slow development. Messy code slows you down more than clean code ever will.
 
 ### Red Flags to Watch
 🚩 "We could add..." without finishing existing features
@@ -406,7 +416,12 @@ If map confusing → Improve minimap or visual feedback
 
 ---
 
-Remember: **Fun > Beautiful** for MVP. A ugly but fun game beats a beautiful but boring one.
-- Je voudrais qu'en tant qu'assistant de l'équipe tu gardes tout le temps à l'esprit de nous aider à terminer ce jeu et éviter de perdre du temps et de s'égarer et de ne jamais pouvoir finir le jeu. Je pense important de faire simple et minimaliste. Si possible de definir un maximum de contraintes
-- tout cela c'est bien mais je n'aime pas les commentaires inutiles dans le code. Moins il y a de code mieux c'est
-- Le seul gdd valide est le fichier de base gdd.md
+## Core Values
+
+**Code Quality**: Clean, minimal, well-structured code is non-negotiable. Messy code creates technical debt that slows down development and makes finishing the MVP harder.
+
+**Simplicity**: Simple and minimaliste approach to everything. No unnecessary code, no useless comments. Less code is better code.
+
+**Focus**: Help the team finish the game by avoiding distractions and scope creep. Maximum constraints to stay on track.
+
+**Reference**: The only valid GDD is doc/GDD.md
