@@ -1,20 +1,16 @@
 //! Player-specific behavior.
 
+use crate::{
+    asset_tracking::LoadResource, demo::movement::{MovementController, ScreenWrap},
+    AppSystems,
+    PausableSystems,
+};
 use avian2d::prelude::{
     Collider, CollisionEventsEnabled, DebugRender, LinearVelocity, LockedAxes, RigidBody,
 };
 use bevy::{
     image::{ImageLoaderSettings, ImageSampler},
     prelude::*,
-};
-
-use crate::{
-    AppSystems, PausableSystems,
-    asset_tracking::LoadResource,
-    demo::{
-        animation::PlayerAnimation,
-        movement::{MovementController, ScreenWrap},
-    },
 };
 
 pub(super) fn plugin(app: &mut App) {
@@ -32,34 +28,38 @@ pub(super) fn plugin(app: &mut App) {
 /// The player character.
 pub fn player(
     max_speed: f32,
-    player_assets: &PlayerAssets,
-    texture_atlas_layouts: &mut Assets<TextureAtlasLayout>,
+    materials: &mut ResMut<Assets<ColorMaterial>>,
+    meshes: &mut ResMut<Assets<Mesh>>,
+    //player_assets: &PlayerAssets,
+    //texture_atlas_layouts: &mut Assets<TextureAtlasLayout>,
 ) -> impl Bundle {
     // A texture atlas is a way to split a single image into a grid of related images.
     // You can learn more in this example: https://github.com/bevyengine/bevy/blob/latest/examples/2d/texture_atlas.rs
-    let layout = TextureAtlasLayout::from_grid(UVec2::splat(32), 6, 2, Some(UVec2::splat(1)), None);
-    let texture_atlas_layout = texture_atlas_layouts.add(layout);
-    let player_animation = PlayerAnimation::new();
+    // let layout = TextureAtlasLayout::from_grid(UVec2::splat(32), 6, 2, Some(UVec2::splat(1)), None);
+    // let texture_atlas_layout = texture_atlas_layouts.add(layout);
+    // let player_animation = PlayerAnimation::new();
 
     (
         Name::new("Player"),
         Player,
-        Sprite::from_atlas_image(
-            player_assets.ducky.clone(),
-            TextureAtlas {
-                layout: texture_atlas_layout,
-                index: player_animation.get_atlas_index(),
-            },
-        ),
+        // Sprite::from_atlas_image(
+        //     player_assets.ducky.clone(),
+        //     TextureAtlas {
+        //         layout: texture_atlas_layout,
+        //         index: player_animation.get_atlas_index(),
+        //     },
+        // ),
+        // player_animation,
+        Mesh2d(meshes.add(Rectangle::new(32., 32.))),
+        MeshMaterial2d(materials.add(ColorMaterial::from(Color::WHITE))),
         Transform::from_scale(Vec2::splat(4.0).extend(1.0)),
         MovementController {
             max_speed,
             ..default()
         },
         ScreenWrap,
-        player_animation,
         RigidBody::Dynamic,
-        Collider::rectangle(28.0, 28.0),
+        Collider::rectangle(32.0, 32.0),
         LinearVelocity::ZERO,
         LockedAxes::ROTATION_LOCKED,
         CollisionEventsEnabled,

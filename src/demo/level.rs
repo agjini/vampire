@@ -1,11 +1,6 @@
 //! Spawn the main level.
 
-use crate::{
-    asset_tracking::LoadResource,
-    audio::music,
-    demo::player::{PlayerAssets, player},
-    screens::Screen,
-};
+use crate::{asset_tracking::LoadResource, audio::music, demo::player::player, screens::Screen};
 use avian2d::prelude::{Collider, RigidBody};
 use bevy::prelude::*;
 
@@ -33,8 +28,8 @@ impl FromWorld for LevelAssets {
 pub fn spawn_level(
     mut commands: Commands,
     level_assets: Res<LevelAssets>,
-    player_assets: Res<PlayerAssets>,
-    mut texture_atlas_layouts: ResMut<Assets<TextureAtlasLayout>>,
+    // player_assets: Res<PlayerAssets>,
+    // mut texture_atlas_layouts: ResMut<Assets<TextureAtlasLayout>>,
     mut materials: ResMut<Assets<ColorMaterial>>,
     mut meshes: ResMut<Assets<Mesh>>,
 ) {
@@ -44,7 +39,7 @@ pub fn spawn_level(
         Visibility::default(),
         DespawnOnExit(Screen::Gameplay),
         children![
-            player(400.0, &player_assets, &mut texture_atlas_layouts),
+            player(400.0, &mut materials, &mut meshes),
             (
                 Name::new("Gameplay Music"),
                 music(level_assets.music.clone())
@@ -52,31 +47,31 @@ pub fn spawn_level(
             wall(
                 &mut meshes,
                 &mut materials,
-                Vec2::new(0.0, -100.0),
+                Vec2::new(0.0, -300.0),
                 Vec2::new(500.0, 25.0)
             ),
             wall(
                 &mut meshes,
                 &mut materials,
-                Vec2::new(0.0, 100.0),
+                Vec2::new(0.0, 300.0),
                 Vec2::new(500.0, 25.0)
             ),
             wall(
                 &mut meshes,
                 &mut materials,
-                Vec2::new(-250.0, 0.0),
+                Vec2::new(-350.0, 0.0),
                 Vec2::new(25.0, 200.0)
             ),
             wall(
                 &mut meshes,
                 &mut materials,
-                Vec2::new(250.0, 0.0),
+                Vec2::new(350.0, 0.0),
                 Vec2::new(25.0, 200.0)
             ),
             wall(
                 &mut meshes,
                 &mut materials,
-                Vec2::new(100.0, 0.0),
+                Vec2::new(150.0, 0.0),
                 Vec2::new(100.0, 25.0)
             ),
         ],
