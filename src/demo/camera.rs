@@ -2,8 +2,12 @@ use crate::demo::player::Player;
 use crate::PausableSystems;
 use bevy::camera::Camera2d;
 use bevy::prelude::{
-    Commands, IntoScheduleConfigs, Name, Query, Startup, Transform, Update, With, Without,
+    Commands, Component, IntoScheduleConfigs, Name, Query, Startup, Transform, Update, With,
+    Without,
 };
+
+#[derive(Component)]
+pub struct MainCamera;
 
 pub(super) fn plugin(app: &mut bevy::prelude::App) {
     app.add_systems(Startup, spawn_camera)
@@ -11,7 +15,12 @@ pub(super) fn plugin(app: &mut bevy::prelude::App) {
 }
 
 fn spawn_camera(mut commands: Commands) {
-    commands.spawn((Name::new("Camera"), Camera2d, Transform::default()));
+    commands.spawn((
+        Name::new("Camera"),
+        Camera2d,
+        Transform::default(),
+        MainCamera,
+    ));
 }
 
 fn camera_follow(

@@ -1,5 +1,10 @@
-//! Player-specific behavior.
+//! Comportement spécifique au joueur.
+//!
+//! Ce module gère le joueur, son viseur (aim rig) et les entrées de direction.
+//! Il fournit les composants et ressources nécessaires pour contrôler le personnage
+//! du joueur et gérer sa visée avec la souris ou la manette.
 
+use crate::demo::camera::MainCamera;
 use crate::{
     asset_tracking::LoadResource, demo::movement::MovementController, AppSystems, PausableSystems,
 };
@@ -11,42 +16,79 @@ use bevy::{
     prelude::*,
 };
 
-#[derive(Component, Debug, Clone, Copy, Eq, PartialEq, Default, Reflect)]
-#[reflect(Component)]
-pub struct Player;
 const UP: [KeyCode; 2] = [KeyCode::KeyW, KeyCode::ArrowUp];
 const DOWN: [KeyCode; 2] = [KeyCode::KeyS, KeyCode::ArrowDown];
 const LEFT: [KeyCode; 2] = [KeyCode::KeyA, KeyCode::ArrowLeft];
 const RIGHT: [KeyCode; 2] = [KeyCode::KeyD, KeyCode::ArrowRight];
 const AIM_RADIUS: f32 = 75.;
 
+/// Marqueur de composant pour l'entité joueur.
+///
+/// Utilisé pour identifier et requêter l'entité principale du joueur dans les systèmes.
+
+#[derive(Component, Debug, Clone, Copy, Eq, PartialEq, Default, Reflect)]
+#[reflect(Component)]
+pub struct Player;
+
+/// Source de la direction de visée.
+///
+/// Détermine si la visée provient de la souris ou d'une manette de jeu.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Reflect)]
-enum AimSource {
+pub enum AimSource {
+    /// Visée contrôlée par la souris.
     Mouse,
+    /// Visée contrôlée par la manette.
     Gamepad,
 }
 
+/// Composant de viseur pour le personnage joueur.
+///
+/// Gère le cercle de visée et la croix de visée qui suivent la direction de la souris.
+/// Le viseur tourne autour du joueur pour indiquer où le joueur vise.
 #[derive(Component, Debug, Reflect)]
 #[reflect(Component)]
-struct AimRig {
-    radius: f32,
-    source: AimSource,
+pub struct AimRig {
+    /// Le rayon du cercle de visée en pixels.
+    pub radius: f32,
+
+    /// La source de la direction de visée (souris ou manette).
+    pub source: AimSource,
 }
 
+/// Direction de visée du joueur en radians.
+///
+/// Représente l'angle de visée calculé à partir de la position de la souris
+/// par rapport au joueur. L'angle 0 correspond à la droite (axe X positif).
+#[derive(Component, Debug, Clone, Copy, PartialEq, Default, Reflect)]
+#[reflect(Component)]
+pub struct AimDirection(pub f32);
 
 pub(super) fn plugin(app: &mut App) {
     app.load_resource::<PlayerAssets>();
 
-    // Record directional input as movement controls.
     app.add_systems(
         Update,
-        record_player_directional_input
+        (record_player_directional_input, record_aim_direction)
             .in_set(AppSystems::RecordInput)
             .in_set(PausableSystems),
     );
 }
 
-/// The player character.
+/// Crée un bundle complet pour l'entité joueur.
+///
+/// # Arguments
+///
+/// * `max_speed` - Vitesse maximale de déplacement du joueur
+/// * `materials` - Ressource des matériaux pour créer les visuels
+/// * `meshes` - Ressource des meshes pour créer les formes
+///
+/// # Retour
+///
+/// Un bundle contenant tous les composants nécessaires au joueur :
+/// - Composants de rendu (mesh, matériaux)
+/// - Composants de physique (rigidbody, collider)
+/// - Contrôleur de mouvement
+/// - Système de visée (AimRig avec cercle et croix)
 pub fn player(
     max_speed: f32,
     materials: &mut ResMut<Assets<ColorMaterial>>,
@@ -69,45 +111,70 @@ pub fn player(
             max_speed,
             ..default()
         },
+        AimDirection::default(),
         RigidBody::Dynamic,
         Collider::rectangle(32.0, 32.0),
         LinearVelocity::ZERO,
         LockedAxes::ROTATION_LOCKED,
         CollisionEventsEnabled,
         DebugRender::default().with_collider_color(Color::WHITE),
-        children![
-            (
-                Name::new("AimRig"),
-                Transform::default(),
-                AimRig {
-                    radius: AIM_RADIUS,
-                    source: AimSource::Mouse,
-                },
-                children![
-                    (
-                        Name::new("AimCircle"),
-                        Mesh2d(aim_circle_mesh),
-                        MeshMaterial2d(aime_circle_material),
-                        Transform::from_xyz(0.0, 0.0, -0.1),
-                    ),
-                    (
-                        Name::new("AimCross"),
-                        Transform::from_translation(Vec3::new(AIM_RADIUS, 0., 0.1)),
-                        children![
-                            (
-                                Mesh2d(cross_horizontal_mesh),
-                                MeshMaterial2d(cross_material.clone()),
-                            ),
-                            (
-                                Mesh2d(cross_vertical_mesh),
-                                MeshMaterial2d(cross_material),
-                            ),
-                        ],
-                    )
-                ]
-            )
-        ]
+        children![(
+            Name::new("AimRig"),
+            Visibility::Inherited,
+            Transform::default(),
+            AimRig {
+                radius: AIM_RADIUS,
+                source: AimSource::Mouse,
+            },
+            children![
+                (
+                    Name::new("AimCircle"),
+                    Visibility::Inherited,
+                    Mesh2d(aim_circle_mesh),
+                    MeshMaterial2d(aime_circle_material),
+                    Transform::from_xyz(0.0, 0.0, -0.1),
+                ),
+                (
+                    Name::new("AimCross"),
+                    Visibility::Inherited,
+                    Transform::from_translation(Vec3::new(AIM_RADIUS, 0., 0.1)),
+                    children![
+                        (
+                            Visibility::Inherited,
+                            Mesh2d(cross_horizontal_mesh),
+                            MeshMaterial2d(cross_material.clone()),
+                        ),
+                        (
+                            Visibility::Inherited,
+                            Mesh2d(cross_vertical_mesh),
+                            MeshMaterial2d(cross_material),
+                        ),
+                    ],
+                )
+            ]
+        )],
     )
+}
+
+fn record_aim_direction(
+    camera_query: Single<(&Camera, &GlobalTransform), With<MainCamera>>,
+    window: Single<&Window>,
+    player_query: Single<(&GlobalTransform, &mut AimDirection), With<Player>>,
+) {
+    let mouse_coords = window.cursor_position().map(|pos| {
+        let (camera, camera_transform) = camera_query.into_inner();
+        camera
+            .viewport_to_world_2d(camera_transform, pos)
+            .unwrap_or(vec2(0.0, 0.0))
+    });
+
+    let (player_transform, mut aim_direction) = player_query.into_inner();
+    let player_pos = player_transform.translation().truncate();
+    let aim_direction_vec = mouse_coords.unwrap_or_default() - player_pos;
+
+    if aim_direction_vec != Vec2::ZERO {
+        aim_direction.0 = aim_direction_vec.y.atan2(aim_direction_vec.x);
+    }
 }
 
 fn record_player_directional_input(
@@ -134,11 +201,17 @@ fn record_player_directional_input(
     }
 }
 
+/// Ressource contenant les assets du joueur.
+///
+/// Charge et stocke les images, sons et autres ressources utilisées par le joueur.
+/// Cette ressource est automatiquement chargée au démarrage du plugin.
 #[derive(Resource, Asset, Clone, Reflect)]
 #[reflect(Resource)]
 pub struct PlayerAssets {
     #[dependency]
     ducky: Handle<Image>,
+
+    /// Liste des sons de pas utilisés pour le déplacement du joueur.
     #[dependency]
     pub steps: Vec<Handle<AudioSource>>,
 }

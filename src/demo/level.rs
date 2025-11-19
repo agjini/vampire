@@ -28,8 +28,6 @@ impl FromWorld for LevelAssets {
 pub fn spawn_level(
     mut commands: Commands,
     level_assets: Res<LevelAssets>,
-    // player_assets: Res<PlayerAssets>,
-    // mut texture_atlas_layouts: ResMut<Assets<TextureAtlasLayout>>,
     mut materials: ResMut<Assets<ColorMaterial>>,
     mut meshes: ResMut<Assets<Mesh>>,
 ) {
