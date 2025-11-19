@@ -11,7 +11,7 @@ Voir [Questions/Decisions](doc/decisions.md)
 # TODO
 
 - [ ] Trouver un nom pour le jeu
-- [ ] Comment on trouve des assetss
+- [ ] Comment on trouve des assets
 - [ ] Créer un personnage/hero/heroine
 - [ ] Définir les stats
 - [ ] Ecrire les mecaniques de gameplay minimale attendue
