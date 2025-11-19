@@ -1,9 +1,7 @@
 //! Player-specific behavior.
 
 use crate::{
-    asset_tracking::LoadResource, demo::movement::{MovementController, ScreenWrap},
-    AppSystems,
-    PausableSystems,
+    asset_tracking::LoadResource, demo::movement::MovementController, AppSystems, PausableSystems,
 };
 use avian2d::prelude::{
     Collider, CollisionEventsEnabled, DebugRender, LinearVelocity, LockedAxes, RigidBody,
@@ -57,7 +55,6 @@ pub fn player(
             max_speed,
             ..default()
         },
-        ScreenWrap,
         RigidBody::Dynamic,
         Collider::rectangle(32.0, 32.0),
         LinearVelocity::ZERO,
