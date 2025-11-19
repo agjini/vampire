@@ -33,7 +33,3 @@ fn close_menu(_: On<Pointer<Click>>, mut next_menu: ResMut<NextState<Menu>>) {
 fn quit_to_title(_: On<Pointer<Click>>, mut next_screen: ResMut<NextState<Screen>>) {
     next_screen.set(Screen::Title);
 }
-
-fn go_back(mut next_menu: ResMut<NextState<Menu>>) {
-    next_menu.set(Menu::None);
-}
